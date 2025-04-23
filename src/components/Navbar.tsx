@@ -6,7 +6,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import PersonIcon from '@mui/icons-material/Person';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 
 export default function NavBar() {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -58,21 +58,23 @@ export default function NavBar() {
 
             {/* Drawer for mobile navigation */}
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-                <Box
-                    sx={{ width: 250 }}
-                    role="presentation"
-                    onClick={toggleDrawer(false)}
-                    onKeyDown={toggleDrawer(false)}
-                >
-                    <List>
-                        {["Home", "Collections", "New"].map((text) => (
-                            <ListItem button key={text}>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </Box>
-            </Drawer>
+    <Box
+        sx={{ width: 250 }}
+        role="presentation"
+        onClick={toggleDrawer(false)}
+        onKeyDown={toggleDrawer(false)}
+    >
+        <List>
+            {["Home", "Collections", "New"].map((text) => (
+                <ListItem key={text} component="a" href={`#${text.toLowerCase()}`} sx={{ textDecoration: "none" }}>
+                    <ListItemText primary={text} />
+                </ListItem>
+            ))}
+        </List>
+    </Box>
+</Drawer>
+
+
         </Box>
     );
 }
@@ -93,7 +95,7 @@ function Links({ linkName }: { linkName: string }) {
     );
 }
 
-function Buttons({ children }) {
+function Buttons({ children }: { children: ReactNode }) {
     return (
         <IconButton 
             sx={{ 

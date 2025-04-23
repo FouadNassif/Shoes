@@ -31,7 +31,7 @@ export default function ItemCard({ item }: { item: ItemType }) {
       >
         <Image
           src={item.imgSrc}
-          alt={item.name} // Use item name for alt text to improve accessibility
+          alt={item.name} 
           width={400}
           height={350}
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
@@ -39,28 +39,25 @@ export default function ItemCard({ item }: { item: ItemType }) {
         />
       </Box>
 
-      {/* Item details */}
       <Box sx={{ marginTop: 1.5 }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography sx={{ color: "GrayText", fontSize: 14 }}>
             {item.category}
           </Typography>
 
-          {/* Color count */}
           <Box sx={{ display: "flex", alignItems: "center", mx: 2 }}>
             <Box
               sx={{
                 width: 15,
                 height: 15,
                 border: "1px solid black",
-                backgroundColor: "var(--accent)", // Ensure accent color is defined
+                backgroundColor: "var(--accent)",
               }}
             ></Box>
             <Typography>+{item.colors.length}</Typography>
           </Box>
         </Box>
 
-        {/* Item name and price */}
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <Typography sx={{ fontSize: 19, fontWeight: 700 }}>
             {item.name}

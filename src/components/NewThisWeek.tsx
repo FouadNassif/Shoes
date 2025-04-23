@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { useRef } from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
@@ -11,7 +11,7 @@ export default function NewThisWeek() {
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const itemWidth = scrollRef.current.firstChild?.clientWidth || 0;
+      const itemWidth = (scrollRef.current.firstChild as HTMLElement)?.clientWidth || 0;
       scrollRef.current.scrollBy({
         left: direction === "left" ? -itemWidth : itemWidth,
         behavior: "smooth",
@@ -23,7 +23,7 @@ export default function NewThisWeek() {
     <Box sx={{ mt: 10, px: 2 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap" }}>
         <Typography variant="h5" sx={{ fontSize: 32, fontWeight: "700" }} className="titleFont">
-          NEW THIS WEEK
+          New This Week
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", mt: { xs: 1, sm: 0 } }}>
           View All <EastIcon />
