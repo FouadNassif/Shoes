@@ -1,7 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
-
-export default function ItemCard({ item }) {
+type ItemType = {
+    name: string;
+    imgSrc: string;
+    colors: string[];
+    category: string;
+    price: Number;
+  };
+export default function ItemCard({ item }: {item: ItemType}) {
     return (
         <Box
         sx={{
