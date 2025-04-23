@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+:root {
+    --primary: #ffffff;
+    --secondary: #000000;
+    --accent: #a9a9a950;
+    --text: #1D3557;
+  }
+
+.titleFont{
+  font-family: "Grandstander", cursive;
+}
+
+body {
+font-family: 'Bebas Neue', sans-serif;
+}
+
+.card img {
+  background-repeat: no-repeat;
+  object-fit: cover;
+}
