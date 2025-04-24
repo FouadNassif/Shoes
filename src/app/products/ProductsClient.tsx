@@ -310,6 +310,7 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
               alignItems: "center",
               justifyContent: "space-between",
               mt: 2,
+              px: { xs: 2, sm: 0 }, // Add padding on mobile
             }}
           >
             <Typography
@@ -318,34 +319,67 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
               PRODUCTS ({displayedShoes.length})
             </Typography>
             {isMobile && (
-              <TuneIcon
-                sx={{ cursor: "pointer", color: "var(--secondary)" }}
-                onClick={() => setOpenFilter(true)}
-              />
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <FormControl size="small">
+                  <Select
+                    value={sort}
+                    onChange={handleSortChange}
+                    size="small"
+                    sx={{ 
+                      minWidth: 120,
+                      '& .MuiSelect-select': { 
+                        py: 1,
+                        fontSize: '0.875rem'
+                      }
+                    }}
+                  >
+                    <MenuItem value="default">Default</MenuItem>
+                    <MenuItem value="date-desc">Newest</MenuItem>
+                    <MenuItem value="price-asc">Price: Low to High</MenuItem>
+                    <MenuItem value="price-desc">Price: High to Low</MenuItem>
+                    <MenuItem value="name-asc">Name: A to Z</MenuItem>
+                  </Select>
+                </FormControl>
+                <TuneIcon
+                  sx={{ 
+                    cursor: "pointer", 
+                    color: "var(--secondary)",
+                    fontSize: 28,
+                    p: 0.5,
+                    borderRadius: 1,
+                    '&:hover': {
+                      bgcolor: 'rgba(0, 0, 0, 0.04)'
+                    }
+                  }}
+                  onClick={() => setOpenFilter(true)}
+                />
+              </Box>
             )}
           </Box>
 
           <SearchBar searchQuery={filters.searchQuery} onSearchChange={handleSearchChange} />
 
-          {/* --- Sorting Dropdown --- */}
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
+          {/* --- Sorting Dropdown (Desktop only) --- */}
+          {!isMobile && (
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
               <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
-                  <InputLabel id="sort-by-label">Sort By</InputLabel>
-                  <Select
-                      labelId="sort-by-label"
-                      id="sort-by-select"
-                      value={sort}
-                      label="Sort By"
-                      onChange={handleSortChange}
-                  >
-                      <MenuItem value="default">Default</MenuItem>
-                      <MenuItem value="date-desc">Newest</MenuItem>
-                      <MenuItem value="price-asc">Price: Low to High</MenuItem>
-                      <MenuItem value="price-desc">Price: High to Low</MenuItem>
-                      <MenuItem value="name-asc">Name: A to Z</MenuItem>
-                  </Select>
+                <InputLabel id="sort-by-label">Sort By</InputLabel>
+                <Select
+                  labelId="sort-by-label"
+                  id="sort-by-select"
+                  value={sort}
+                  label="Sort By"
+                  onChange={handleSortChange}
+                >
+                  <MenuItem value="default">Default</MenuItem>
+                  <MenuItem value="date-desc">Newest</MenuItem>
+                  <MenuItem value="price-asc">Price: Low to High</MenuItem>
+                  <MenuItem value="price-desc">Price: High to Low</MenuItem>
+                  <MenuItem value="name-asc">Name: A to Z</MenuItem>
+                </Select>
               </FormControl>
-          </Box>
+            </Box>
+          )}
           {/* ----------------------- */}
 
           {/* Product Grid */}
@@ -355,12 +389,13 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
               overflowY: isMobile ? "visible" : "auto",
               mt: 3,
               pr: isMobile ? 0 : 1,
+              px: { xs: 2, sm: 0 }, // Add padding on mobile
             }}
           >
             {displayedShoes.length === 0 && (
-                <Typography sx={{textAlign: 'center', mt: 5, color: 'grey.600'}}>
-                    No products match your criteria.
-                </Typography>
+              <Typography sx={{textAlign: 'center', mt: 5, color: 'grey.600'}}>
+                No products match your criteria.
+              </Typography>
             )}
             
             {!isMobile ? (

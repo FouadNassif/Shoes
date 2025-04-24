@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Checkbox, FormControlLabel, FormGroup, Typography, Slider, Select, MenuItem, FormControl, InputLabel, Divider, Accordion, AccordionSummary, AccordionDetails, SelectChangeEvent } from "@mui/material";
 import { sizes as allSizes, colors as allColors, categories as allCategories, brands as allBrands } from "@/data/Shoes";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ClearIcon from '@mui/icons-material/Clear';
 
 // Define props type matching the state in ProductsClient
 interface AppliedFilters {
@@ -110,45 +111,39 @@ export default function MobileFilterDialog({
 
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs" PaperProps={{ sx: { height: '90vh' } }}>
-            <DialogTitle>Filters & Sort</DialogTitle>
+            <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography sx={{fontWeight: 700, fontSize: 20}}>Filters</Typography>
+                <Button 
+                    startIcon={<ClearIcon />}
+                    onClick={handleClearAndClose}
+                    color="secondary"
+                    size="small"
+                    sx={{ 
+                        textTransform: 'none',
+                        '&:hover': {
+                            bgcolor: 'rgba(0, 0, 0, 0.04)'
+                        }
+                    }}
+                >
+                    Clear All
+                </Button>
+            </DialogTitle>
             <DialogContent dividers sx={{ p: 1 }}>
-                 {/* --- Sorting --- */}
-                 <Accordion expanded={expanded === 'sort'} onChange={handleAccordionChange('sort')} disableGutters elevation={0} square>
-                     <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 48, '&.Mui-expanded': { minHeight: 48 } }}>
-                        <Typography variant="subtitle1" fontWeight={600}>Sort By</Typography>
-                     </AccordionSummary>
-                     <AccordionDetails sx={{ p: 1 }}>
-                        <FormControl fullWidth>
-                            <Select
-                                value={localSort}
-                                onChange={handleLocalSortChange}
-                                size="small"
-                            >
-                                <MenuItem value="default">Default</MenuItem>
-                                <MenuItem value="date-desc">Newest</MenuItem>
-                                <MenuItem value="price-asc">Price: Low to High</MenuItem>
-                                <MenuItem value="price-desc">Price: High to Low</MenuItem>
-                                <MenuItem value="name-asc">Name: A to Z</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </AccordionDetails>
-                 </Accordion>
-                
                 {/* --- Filters --- */}
-                 <Accordion expanded={expanded === 'category'} onChange={handleAccordionChange('category')} disableGutters elevation={0} square>
+                <Accordion expanded={expanded === 'category'} onChange={handleAccordionChange('category')} disableGutters elevation={0} square>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 48, '&.Mui-expanded': { minHeight: 48 } }}>
                         <Typography variant="subtitle1" fontWeight={600}>Category</Typography>
                     </AccordionSummary>
-                     <AccordionDetails sx={{ p: 1 }}>
+                    <AccordionDetails sx={{ p: 1 }}>
                         <FormGroup>
                             {allCategories.map((cat) => (
                                 <FormControlLabel key={`cat-mob-${cat}`} control={<Checkbox size="small" checked={localFilters.categories.includes(cat)} onChange={handleLocalCheckboxChange('categories', cat)} />} label={cat} sx={{ m: 0 }}/>
                             ))}
                         </FormGroup>
-                     </AccordionDetails>
-                 </Accordion>
+                    </AccordionDetails>
+                </Accordion>
 
-                 <Accordion expanded={expanded === 'brand'} onChange={handleAccordionChange('brand')} disableGutters elevation={0} square>
+                <Accordion expanded={expanded === 'brand'} onChange={handleAccordionChange('brand')} disableGutters elevation={0} square>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 48, '&.Mui-expanded': { minHeight: 48 } }}>
                         <Typography variant="subtitle1" fontWeight={600}>Brand</Typography>
                     </AccordionSummary>
@@ -221,12 +216,20 @@ export default function MobileFilterDialog({
                  </Accordion>
 
             </DialogContent>
-            <DialogActions sx={{ justifyContent: 'space-between' }}>
-                <Button onClick={handleClearAndClose} color="secondary">Clear All</Button> 
-                <Box>
-                    <Button onClick={onClose}>Cancel</Button>
-                    <Button onClick={handleApplyAndClose} variant="contained">Apply</Button>
-                </Box>
+            <DialogActions sx={{ justifyContent: 'flex-end', gap: 1 }}>
+                <Button onClick={onClose}>Cancel</Button>
+                <Button 
+                    onClick={handleApplyAndClose} 
+                    variant="contained"
+                    sx={{ 
+                        bgcolor: 'var(--secondary)',
+                        '&:hover': {
+                            bgcolor: 'var(--secondary-dark)'
+                        }
+                    }}
+                >
+                    Apply
+                </Button>
             </DialogActions>
         </Dialog>
     );
