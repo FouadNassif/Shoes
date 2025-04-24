@@ -11,7 +11,7 @@ export default function NewCollections() {
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: 350, flex: 1 }}>
         <Box>
           <Typography sx={{ fontSize: 32, fontWeight: "700" }} className="titleFont">New Collection</Typography>
-          <Typography sx={{ fontSize: 18, fontWeight: "300" }}>Summer 2024</Typography>
+          <Typography sx={{ fontSize: 18, fontWeight: "300" }}>Summer 2025</Typography>
           {isMobile ? (
         <>
         <Item imgSrc="/assets/img/shoes/img1.jpg" alt="New Collections Image 1" />

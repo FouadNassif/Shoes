@@ -184,7 +184,7 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
                 sx={{
                   display: "grid",
                   gridTemplateColumns: "repeat(2, 1fr)",
-                  gap: 3,// Add horizontal padding to prevent cut-off
+                  gap: 2,
                   width: "100%", // Ensure the grid container doesn't exceed screen
                   boxSizing: "border-box", // Prevent padding from expanding container
                 }}
@@ -206,7 +206,6 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
         filters={filters}
         setFilters={setFilters}
         onApply={() => {
-          // You can apply filters here
           console.log("Filters applied", filters, sort);
         }}
       />

@@ -56,7 +56,7 @@ export default function Navbar() {
             }}
             className="titleFont"
           >
-            SHOES
+            SHOESLB
           </Typography>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>

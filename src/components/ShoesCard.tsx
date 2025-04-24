@@ -61,7 +61,7 @@ const ShoesCard: React.FC<ShoesCardProps> = ({ shoe }) => {
         <Link
             href={`/products/${brandSlug}/${nameSlug}`}
             sx={{
-                width: { xs: "100%", md: "30%" },
+                width: { xs: "95%", md: "30%" },
                 textDecoration: "none",
                 display: 'block'
             }}
@@ -116,10 +116,6 @@ const ShoesCard: React.FC<ShoesCardProps> = ({ shoe }) => {
                             fontSize: { xs: 15, md: 17 },
                             fontWeight: 700,
                             color: "var(--secondary)",
-                            width: "70%",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
                         }}
                     >
                         {shoe.name}
