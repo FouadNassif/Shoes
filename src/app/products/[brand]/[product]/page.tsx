@@ -1,6 +1,7 @@
 import { shoes } from "@/data/staticShoes";
 import ProductDetailClient from "./ProductDetailClient";
 import { Metadata } from "next";
+import { type MetadataParams } from "next";
 
 interface PageProps {
   params: {
@@ -9,6 +10,7 @@ interface PageProps {
   };
 }
 
+// This works fine — no need to change this part
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const productData = shoes.find(
     shoe =>
@@ -21,7 +23,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function ProductDetail({ params }: PageProps) {
+// ✅ Use `async` and add return type to the function
+export default async function ProductDetail({ params }: PageProps) {
   const { brand, product } = params;
 
   const productData = shoes.find(
