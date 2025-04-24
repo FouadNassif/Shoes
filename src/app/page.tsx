@@ -18,9 +18,8 @@ export default function Home() {
       <NewCollections/>
       <Break1/>
       <NewThisWeek/>
-      <Break1/>
-      <LatestRealse/>
       <PromoCode/>
+      <LatestRealse/>
       <Category/>
     </Box>
     <Footer/>

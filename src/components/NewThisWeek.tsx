@@ -4,7 +4,7 @@ import { Box, Typography, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import EastIcon from "@mui/icons-material/East";
 import ItemCard from "@/components/ItemCard";
-import { testItem } from "@/data/items";
+import { NewThisWeekData } from "@/data/NewThisWeekData";
 
 export default function NewThisWeek() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -43,7 +43,7 @@ export default function NewThisWeek() {
           mt: 2
         }}
       >
-        {testItem.map((item, key) => (
+        {NewThisWeekData.map((item, key) => (
           <Box
             key={key}
             sx={{

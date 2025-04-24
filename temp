@@ -1,0 +1,105 @@
+{/* <Box sx={{ 
+            minHeight: "100vh",
+            bgcolor: "background.default",
+            py: 4,
+            px: { xs: 2, sm: 4, md: 6 }
+        }}>
+            <Box sx={{ 
+                display: "flex", 
+                flexDirection: { xs: "column", md: "row" },
+                gap: 4
+            }}>
+                {/* Product Image */}
+                <Box sx={{ 
+                    flex: 1,
+                    position: "relative",
+                    width: "100%",
+                    height: { xs: 300, sm: 400, md: 500 },
+                    borderRadius: 2,
+                    overflow: "hidden"
+                }}>
+                    <Image
+                        src={product.mainImage}
+                        alt={product.name}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        priority
+                    />
+                </Box>
+
+                {/* Product Info */}
+                <Box sx={{ 
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2
+                }}>
+                    <Typography variant="h4" sx={{ fontWeight: 700 }}>
+                        {product.name}
+                    </Typography>
+
+                    <Typography variant="h5" sx={{ color: "primary.main", fontWeight: 600 }}>
+                        ${product.price}
+                    </Typography>
+
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                        <Chip 
+                            label={product.brand} 
+                            color="primary" 
+                            variant="outlined"
+                        />
+                        <Chip 
+                            label={product.category} 
+                            color="secondary" 
+                            variant="outlined"
+                        />
+                    </Box>
+
+                    <Divider sx={{ my: 2 }} />
+
+                    <Box>
+                        <Typography variant="h6" sx={{ mb: 2 }}>Select Size</Typography>
+                        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                            {product.sizes.map((size) => (
+                                <Button
+                                    key={size}
+                                    variant={selectedSize === size.toString() ? "contained" : "outlined"}
+                                    onClick={() => setSelectedSize(size.toString())}
+                                    sx={{
+                                        minWidth: "60px",
+                                        height: "40px",
+                                        borderRadius: "20px"
+                                    }}
+                                >
+                                    {size}
+                                </Button>
+                            ))}
+                        </Box>
+                    </Box>
+
+                    <Box sx={{ mt: "auto" }}>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            disabled={!selectedSize}
+                            sx={{
+                                py: 1.5,
+                                borderRadius: 2,
+                                fontSize: "1.1rem"
+                            }}
+                        >
+                            Add to Cart
+                        </Button>
+                    </Box>
+
+                    {/* Product Description */}
+                    <Box>
+                        <Typography variant="h6" sx={{ mb: 2 }}>Product Details</Typography>
+                        <Typography variant="body1" color="text.secondary">
+                            {product.description}
+                        </Typography>
+                    </Box>
+                </Box>
+            </Box>
+        </Box> */}

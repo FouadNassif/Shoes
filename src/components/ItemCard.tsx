@@ -4,7 +4,7 @@ import Image from "next/image";
 // Define the item type with expected fields
 type ItemType = {
   name: string;
-  imgSrc: string;
+  mainImage: string;
   colors: string[]; // Array of color hex strings
   category: string;
   price: number;
@@ -30,7 +30,7 @@ export default function ItemCard({ item }: { item: ItemType }) {
         }}
       >
         <Image
-          src={item.imgSrc}
+          src={item.mainImage}
           alt={item.name} 
           width={400}
           height={350}
