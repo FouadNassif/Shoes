@@ -24,6 +24,7 @@ export type Shoe = {
     tags: string[];
     material: string;
     gender: string;
+    date: string;
 };
 
 type ShoesCardProps = {
