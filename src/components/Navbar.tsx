@@ -9,6 +9,11 @@ import {
   List,
   ListItem,
   ListItemText,
+  AppBar,
+  Container,
+  Toolbar,
+  Typography,
+  Badge,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -16,8 +21,9 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import PersonIcon from "@mui/icons-material/Person";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import { useState, ReactNode } from "react";
+import FavoritesBadge from "./FavoritesBadge";
 
-export default function NavBar() {
+export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open: boolean) => () => {
@@ -25,116 +31,78 @@ export default function NavBar() {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
-        mt: 1,
-      }}
-    >
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        {/* Mobile menu icon */}
-        <IconButton
-          onClick={toggleDrawer(true)}
-          sx={{
-            display: { xs: "block", md: "none" },
-            color: "var(--secondary)",
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
+    <AppBar position="sticky" color="transparent" elevation={0}>
+      <Container maxWidth="lg">
+        <Toolbar disableGutters>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2, display: { md: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
 
-        {/* Full links for larger screens */}
-        <Box
-          sx={{
-            display: { xs: "none", md: "flex" },
-            alignItems: "center",
-            ml: 2,
-          }}
-        >
-          <Links linkName="Home" path="/" />
-          <Links linkName="Products" path="/products"/>
-          <Links linkName="About" path="/about"/>
-        </Box>
-      </Box>
+          <Typography
+            variant="h6"
+            component={Link}
+            href="/"
+            sx={{
+              flexGrow: 1,
+              textDecoration: "none",
+              color: "var(--secondary)",
+              fontWeight: 700,
+            }}
+            className="titleFont"
+          >
+            SHOES
+          </Typography>
 
-      {/* Center logo/icon */}
-      <Box sx={{ mt: 1 }}>
-        <StorefrontIcon sx={{ color: "var(--secondary)" }} />
-      </Box>
-
-      {/* Right side icons */}
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Buttons>
-          <FavoriteIcon />
-        </Buttons>
-        <Buttons>
-          <ShoppingBagIcon />
-        </Buttons>
-        <Buttons>
-          <PersonIcon />
-        </Buttons>
-      </Box>
-
-      {/* Drawer for mobile navigation */}
-      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-        <Box
-          sx={{ width: 250 }}
-          role="presentation"
-          onClick={toggleDrawer(false)}
-          onKeyDown={toggleDrawer(false)}
-        >
-          <List>
-            {["Home", "Products", "About"].map((text) => (
-              <ListItem
-                key={text}
-                component="a"
-                href={`${text.toLowerCase()}`}
-                sx={{ textDecoration: "none" }}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <FavoritesBadge />
+            <Link href="/cart" style={{ textDecoration: 'none' }}>
+              <IconButton 
+                sx={{ 
+                  color: "var(--secondary)",
+                  transition: "transform 0.2s",
+                  "&:hover": {
+                    transform: "scale(1.1)"
+                  }
+                }}
               >
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
-    </Box>
+                <Badge 
+                  badgeContent={0} 
+                  color="error"
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      backgroundColor: "var(--accent)",
+                      color: "var(--secondary)",
+                      fontWeight: "bold"
+                    }
+                  }}
+                >
+                  <ShoppingBagIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+            <Button
+              component={Link}
+              href="/products"
+              sx={{
+                color: "var(--secondary)",
+                "&:hover": {
+                  backgroundColor: "var(--accent)",
+                  color: "var(--secondary)",
+                },
+              }}
+            >
+              Shop
+            </Button>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }
 
-function Links({ linkName, path }: { linkName: string, path: string }) {
-  return (
-    <Link
-    href={path}
-      sx={{
-        textDecoration: "none",
-        mx: 2,
-        color: "var(--secondary)",
-        fontSize: 16,
-        "&:hover": { textDecoration: "underline" },
-      }}
-    >
-      {linkName}
-    </Link>
-  );
-}
-
-function Buttons({ children }: { children: ReactNode }) {
-  return (
-    <IconButton
-      sx={{
-        backgroundColor: "var(--secondary)",
-        color: "var(--primary)",
-        borderRadius: "50%",
-        mx: 1,
-        "&:hover": {
-          backgroundColor: "var(--secondary-dark, #555)",
-        },
-      }}
-    >
-      {children}
-    </IconButton>
-  );
-}

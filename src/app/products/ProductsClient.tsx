@@ -70,7 +70,7 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
           display: "flex",
           flex: 1,
           overflow: { xs: "visible", md: "hidden" },
-          mt: 5,
+          mt: {xs:1, md: 5},
         }}
       >
         {/* Sidebar - Only Desktop */}
@@ -103,7 +103,6 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
           </Box>
         )}
 
-        {/* Main Content */}
         <Box
           sx={{
             flex: 1,
@@ -185,8 +184,7 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
                 sx={{
                   display: "grid",
                   gridTemplateColumns: "repeat(2, 1fr)",
-                  gap: 3,
-                  pr: 2, // Add horizontal padding to prevent cut-off
+                  gap: 3,// Add horizontal padding to prevent cut-off
                   width: "100%", // Ensure the grid container doesn't exceed screen
                   boxSizing: "border-box", // Prevent padding from expanding container
                 }}

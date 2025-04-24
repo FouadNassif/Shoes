@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Bebas_Neue } from "next/font/google";
 import "./global.css"
+import { NotificationProvider } from "@/context/NotificationContext";
+import { CartProvider } from "@/context/CartContext";
 
 const inter = Inter({ subsets: ['latin'] })
 const bebas = Bebas_Neue({ subsets: ['latin'], weight: '400' })
@@ -29,7 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${bebas.className}`}>
-        {children}
+        <NotificationProvider>
+          <CartProvider>
+            {children}
+          </CartProvider>
+        </NotificationProvider>
       </body>
     </html>
   );

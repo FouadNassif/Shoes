@@ -1,9 +1,9 @@
 export const shoes = [
     {
-        id: "1",
+        id: 1,
         name: "Air Max 270",
         brand: "Nike",
-        description: "The Nike Air Max 270 delivers visible cushioning underfoot and a sleek, modern design. The Max Air unit provides exceptional comfort and impact protection.",
+        description: "The Nike Air Max 270 delivers visible cushioning underfoot and a sleek, modern design. The Max Air unit provideseceptional comfort and impact protection.",
         category: "Lifestyle",
         colors: ["black", "white", "red", "blue"],
         sizes: [38, 39, 40, 41, 42, 43, 44],
@@ -18,10 +18,9 @@ export const shoes = [
         date: "2025-1-01"
     },
     {
-        id: "2",
+        id: 2,
         name: "Ultra Boost 22",
-        brand: "Adidas",
-        description: "The Ultra Boost 22 features responsive cushioning and a Primeknit+ upper for a snug, supportive fit. Perfect for running or everyday wear.",
+        brand: "Adidas",        description: "The Ultra Boost 22 features responsive cushioning and a Primeknit+ upper for a snug, supportive fit. Perfect for running or everyday wear.",
         category: "Running",
         colors: ["white", "black", "blue", "gray"],
         sizes: [39, 40, 41, 42, 43, 44, 45],
@@ -36,10 +35,10 @@ export const shoes = [
         date: "2025-1-12"
     },
     {
-        id: "3",
+        id: 3,
         name: "Classic Leather",
         brand: "Reebok",
-        description: "The Reebok Classic Leather combines timeless style with modern comfort. The leather upper provides durability while the cushioned midsole offers all-day comfort.",
+        description: "The Reebok Classic Leather combines timeless style with modern comfort. The leather upper providesdrability while the cushioned midsoeoffers all-day comfort.",
         category: "Lifestyle",
         colors: ["white", "black", "navy"],
         sizes: [38, 39, 40, 41, 42, 43],
@@ -54,7 +53,7 @@ export const shoes = [
         date: "2025-1-02"
     },
     {
-        id: "4",
+        id: 4,
         name: "Chuck Taylor All Star",
         brand: "Converse",
         description: "The iconic Chuck Taylor All Star features a canvas upper, rubber toe cap, and vulcanized rubber sole. A timeless classic that never goes out of style.",
@@ -72,10 +71,10 @@ export const shoes = [
         date: "2025-1-05"
     },
     {
-        id: "5",
+        id: 5,
         name: "Old Skool",
         brand: "Vans",
-        description: "The Vans Old Skool features the iconic side stripe and durable canvas upper. Perfect for skateboarding or casual wear.",
+        description: "The Vans Old Skool features the iconic side tipe and durable canvas upper. Perfect for skateboarding or casual wear.",
         category: "Skateboarding",
         colors: ["black", "white", "red", "blue"],
         sizes: [38, 39, 40, 41, 42, 43],
@@ -90,7 +89,7 @@ export const shoes = [
         date: "2025-1-05"
     },
     {
-        id: "6",
+        id: 6,
         name: "990v5",
         brand: "New Balance",
         description: "The New Balance 990v5 combines premium materials with advanced cushioning technology. Perfect for runners who demand both comfort and style.",
@@ -108,10 +107,10 @@ export const shoes = [
         date: "2025-1-09"
     },
     {
-        id: "7",
+        id: 7,
         name: "Cloud Runner",
         brand: "On Running",
-        description: "The Cloud Runner features On's signature CloudTec cushioning for a smooth, responsive ride. Perfect for long-distance runners.",
+        description: "The Cloud Runner features On's signature CloudTec cushioning for a smooth, responsive ride.Prfect for long-distance runners.",
         category: "Running",
         colors: ["white", "black", "blue"],
         sizes: [38, 39, 40, 41, 42, 43, 44],
@@ -126,8 +125,8 @@ export const shoes = [
         date: "2025-1-18"
     },
     {
-        id: "8",
-        name: "Jordan 4's Low",
+        id: 8,
+        name: "Jordan 4's Low swswswswsw",
         brand: "Puma",
         description: "The Puma RS-X combines retro style with modern comfort. The chunky sole and bold design make it a standout sneaker.",
         category: "Lifestyle",
@@ -144,10 +143,10 @@ export const shoes = [
         date: "2025-1-08"
     },
     {
-        id: "9",
+        id: 9,
         name: "Gel-Kayano 28",
         brand: "ASICS",
-        description: "The ASICS Gel-Kayano 28 provides exceptional stability and cushioning for runners. Features FlyteFoam technology for lightweight comfort.",
+        description: "The ASICS Gel-Kayano 28 provideseceptional stability and cushioning for runners. Features FlyteFoam technology for lightweight comfort.",
         category: "Running",
         colors: ["white", "black", "blue"],
         sizes: [39, 40, 41, 42, 43, 44, 45],
@@ -162,7 +161,7 @@ export const shoes = [
         date: "2025-1-09"
     },
     {
-        id: "10",
+        id: 10,
         name: "Classic Clog",
         brand: "Crocs",
         description: "The Classic Clog features Croslite foam construction for lightweight comfort. Perfect for casual wear and water activities.",
@@ -181,7 +180,7 @@ export const shoes = [
     },
 
     {
-        id: "11",
+        id: 11,
         name: "AirForce Clog",
         brand: "Nike",
         description: "The Classic Clog features Croslite foam construction for lightweight comfort. Perfect for casual wear and water activities.",
@@ -200,7 +199,7 @@ export const shoes = [
     },
 
     {
-        id: "12",
+        id: 12,
         name: "KJOwdie Clog",
         brand: "Nike",
         description: "The Classic Clog features Croslite foam construction for lightweight comfort. Perfect for casual wear and water activities.",
@@ -219,7 +218,7 @@ export const shoes = [
     },
 
     {
-        id: "13",
+        id: 13,
         name: "KJOwdie Clog",
         brand: "Nike",
         description: "The Classic Clog features Croslite foam construction for lightweight comfort. Perfect for casual wear and water activities.",
@@ -238,7 +237,7 @@ export const shoes = [
     },
 
     {
-        id: "14",
+        id: 14,
         name: "KJOwdie Clog",
         brand: "Nike",
         description: "The Classic Clog features Croslite foam construction for lightweight comfort. Perfect for casual wear and water activities.",
@@ -257,7 +256,7 @@ export const shoes = [
     },
 
     {
-        id: "15",
+        id: 15,
         name: "KJOwdie Clog",
         brand: "Nike",
         description: "The Classic Clog features Croslite foam construction for lightweight comfort. Perfect for casual wear and water activities.",

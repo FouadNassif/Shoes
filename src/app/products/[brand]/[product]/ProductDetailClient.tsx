@@ -6,6 +6,9 @@ import { useState } from "react";
 import { Shoe } from "@/components/ShoesCard";
 import NavBar from "@/components/Navbar";
 import { keyframes } from "@emotion/react";
+import { addToCart as addToCartUtil } from "@/utils/cart";
+import { useNotification } from '@/context/NotificationContext';
+import { useCart } from '@/context/CartContext';
 
 const fadeIn = keyframes`
   from { opacity: 0.3; }
@@ -32,7 +35,24 @@ export default function ProductDetailClient({
   const [mainImage, setMainImage] = useState<string>(
     product?.mainImage || images[0]
   );
+  const { showNotification } = useNotification();
+  const { addItemToCart } = useCart();
   const isAddEnabled = selectedSize !== "" && selectedColor !== "";
+
+  const handleAddToCart = () => {
+    if (product && selectedSize && selectedColor) {
+      addItemToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        size: selectedSize,
+        color: selectedColor,
+        image: product.mainImage,
+        quantity: 1
+      });
+      showNotification(`${product.name} added to cart!`);
+    }
+  };
 
   if (!product) {
     return (
@@ -195,6 +215,7 @@ export default function ProductDetailClient({
             variant="contained"
             color="primary"
             disabled={!isAddEnabled}
+            onClick={handleAddToCart}
             fullWidth
             sx={{
               mt: 2,
