@@ -24,7 +24,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 // ✅ Use `async` and add return type to the function
-export default async function ProductDetail({ params }: PageProps) {
+// Use inline type for params
+export default async function ProductDetail({ params }: { params: { brand: string; product: string } }) {
   const { brand, product } = params;
 
   const productData = shoes.find(
