@@ -14,8 +14,8 @@ export default function NewCollections() {
           <Typography sx={{ fontSize: 18, fontWeight: "300" }}>Summer 2024</Typography>
           {isMobile ? (
         <>
-        <Item imgSrc="/assets/img/img1.jpg" alt="New Collections Image 1" />
-        <Item imgSrc="/assets/img/img2.jpeg" alt="New Collections Image 2" />
+        <Item imgSrc="/assets/img/shoes/img1.jpg" alt="New Collections Image 1" />
+        <Item imgSrc="/assets/img/shoes/img2.jpeg" alt="New Collections Image 2" />
         </>
       ): null}
         </Box>
