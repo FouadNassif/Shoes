@@ -127,7 +127,7 @@ export const shoes = [
     },
     {
         id: "8",
-        name: "RS-X",
+        name: "Jordan 4's Low",
         brand: "Puma",
         description: "The Puma RS-X combines retro style with modern comfort. The chunky sole and bold design make it a standout sneaker.",
         category: "Lifestyle",

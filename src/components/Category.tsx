@@ -13,8 +13,8 @@ export default function Category() {
       }}
     >
       {[
-        { label: "For Him", src: "/assets/img/img8.jpg" },
-        { label: "For Her", src: "/assets/img/img7.jpg" },
+        { label: "For Him", src: "/assets/img/shoes/img8.jpg" },
+        { label: "For Her", src: "/assets/img/shoes/img7.jpg" },
       ].map((item, index) => (
         <Box
           key={index}

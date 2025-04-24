@@ -37,7 +37,7 @@ const ShoesCard: React.FC<ShoesCardProps> = ({ shoe }) => {
                 textDecoration: "none"
             }}
         >
-            <Box sx={{width: "100%"}} boxShadow={1} p={1} borderRadius={3}>
+            <Box sx={{width: "100%", minHeight: 220}} boxShadow={1} p={1} borderRadius={3}>
                 <Box
                     sx={{
                         position: "relative",
@@ -56,16 +56,29 @@ const ShoesCard: React.FC<ShoesCardProps> = ({ shoe }) => {
                 </Box>
                 
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography sx={{ color: "GrayText", fontSize: 14 }}>
+                    <Typography sx={{ color: "GrayText", fontSize: 13, mt:1}}>
                         {shoe.category}
                     </Typography>
                 </Box>
 
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <Typography sx={{ fontSize: 17, fontWeight: 700, color:"var(--secondary)" }}>
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1 }}>
+                    <Typography 
+                        sx={{ 
+                            fontSize: {xs: 15, md: 17}, 
+                            fontWeight: 700, 
+                            color:"var(--secondary)", 
+                        }}
+                    >
                         {shoe.name}
                     </Typography>
-                    <Typography sx={{ fontSize: 17, fontWeight: 500, color:"var(--secondary)" }}>
+                    <Typography 
+                        sx={{ 
+                            fontSize: 15, 
+                            fontWeight: 500, 
+                            color:"var(--secondary)",
+                            ml: 1
+                        }}
+                    >
                         ${shoe.price}
                     </Typography>
                 </Box>

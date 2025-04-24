@@ -4,13 +4,13 @@ export default function Break1() {
     return(
         <Box
   sx={{
-    my: 20,
+    my: {xs: 10, md: 20},
     display: "flex",
-    flexDirection: { xs: "column", md: "row" },
+    flexDirection: "row",
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    gap: 5,
+    gap: {xs: 1, md: 5},
     textAlign: "center",
   }}
 >

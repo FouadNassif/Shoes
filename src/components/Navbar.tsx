@@ -56,7 +56,7 @@ export default function NavBar() {
         >
           <Links linkName="Home" path="/" />
           <Links linkName="Products" path="/products"/>
-          <Links linkName="About Us" path="/aboutus"/>
+          <Links linkName="About" path="/about"/>
         </Box>
       </Box>
 
@@ -87,7 +87,7 @@ export default function NavBar() {
           onKeyDown={toggleDrawer(false)}
         >
           <List>
-            {["Home", "Products", "About Us"].map((text) => (
+            {["Home", "Products", "About"].map((text) => (
               <ListItem
                 key={text}
                 component="a"

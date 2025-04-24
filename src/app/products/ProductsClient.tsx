@@ -13,17 +13,6 @@ import {
   Typography,
   useMediaQuery,
   CircularProgress,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormLabel,
-  FormGroup,
-  Checkbox,
 } from "@mui/material";
 
 type ProductsClientProps = {
