@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Checkbox, FormControlLabel, FormGroup, Typography, Slider, Select, MenuItem, FormControl, InputLabel, Divider, Accordion, AccordionSummary, AccordionDetails, SelectChangeEvent } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Checkbox, FormControlLabel, FormGroup, Typography, Slider, Select, MenuItem, FormControl, InputLabel, Divider, Accordion, AccordionSummary, AccordionDetails, SelectChangeEvent, Radio, RadioGroup } from "@mui/material";
 import { sizes as allSizes, colors as allColors, categories as allCategories, brands as allBrands } from "@/data/Shoes";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -14,6 +14,7 @@ interface AppliedFilters {
     brands: string[];
     priceRange: [number, number];
     inStock: boolean | null;
+    gender: string[];
 }
 
 interface MobileFilterDialogProps {
@@ -34,7 +35,10 @@ const initialFilters: AppliedFilters = {
     brands: [],
     priceRange: [0, 200],
     inStock: null,
+    gender: [],
 };
+
+const genders = ["Men", "Women"];
 
 export default function MobileFilterDialog({
     open,
@@ -130,6 +134,33 @@ export default function MobileFilterDialog({
             </DialogTitle>
             <DialogContent dividers sx={{ p: 1 }}>
                 {/* --- Filters --- */}
+                <Accordion expanded={expanded === 'gender'} onChange={handleAccordionChange('gender')} disableGutters elevation={0} square>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 48, '&.Mui-expanded': { minHeight: 48 } }}>
+                        <Typography variant="subtitle1" fontWeight={600}>Gender</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ p: 1 }}>
+                        <RadioGroup
+                            value={localFilters.gender[0] || ""}
+                            onChange={(e) => {
+                                setLocalFilters(prev => ({
+                                    ...prev,
+                                    gender: e.target.value ? [e.target.value] : []
+                                }));
+                            }}
+                        >
+                            {genders.map((gender) => (
+                                <FormControlLabel 
+                                    key={`gender-mob-${gender}`}
+                                    control={<Radio size="small" />}
+                                    value={gender}
+                                    label={gender === "Men" ? "For Him" : "For Her"}
+                                    sx={{ m: 0 }}
+                                />
+                            ))}
+                        </RadioGroup>
+                    </AccordionDetails>
+                </Accordion>
+
                 <Accordion expanded={expanded === 'category'} onChange={handleAccordionChange('category')} disableGutters elevation={0} square>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 48, '&.Mui-expanded': { minHeight: 48 } }}>
                         <Typography variant="subtitle1" fontWeight={600}>Category</Typography>

@@ -33,6 +33,7 @@ interface AppliedFilters {
     brands: string[];
     priceRange: [number, number];
     inStock: boolean | null; // null means don't filter by stock
+    gender: string[];
 }
 
 // Initial filter state constant
@@ -44,6 +45,7 @@ const initialFilters: AppliedFilters = {
     brands: [],
     priceRange: [0, 200],
     inStock: null,
+    gender: [],
 };
 
 export default function ProductsClient({ shoes }: ProductsClientProps) {
@@ -109,7 +111,19 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
           filtered = filtered.filter(shoe => shoe.inStock === filters.inStock);
       }
 
-      // 8. Sorting
+      // 8. Gender Filter
+      if (filters.gender.length > 0) {
+          filtered = filtered.filter(shoe => {
+              // Always include unisex items when any gender is selected
+              if (shoe.gender === "Unisex") {
+                  return true;
+              }
+              // Include items that match any selected gender
+              return filters.gender.includes(shoe.gender);
+          });
+      }
+
+      // 9. Sorting
       switch (sort) {
           case 'price-asc':
               filtered.sort((a, b) => a.price - b.price);
@@ -155,23 +169,24 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
 
         // Handle array filters (categories, brands, sizes, colors)
         if (Array.isArray(currentValues)) {
-            if ((currentValues as any[]).includes(value)) {
-                newValues = (currentValues as any[]).filter(v => v !== value);
+            if (filterType === 'gender') {
+                // For gender, just set the single value
+                newValues = value ? [value] : [];
             } else {
-                newValues = [...currentValues, value];
+                if ((currentValues as any[]).includes(value)) {
+                    newValues = (currentValues as any[]).filter(v => v !== value);
+                } else {
+                    newValues = [...currentValues, value];
+                }
             }
         } 
         // Handle price range
         else if (filterType === 'priceRange') {
              newValues = value as [number, number];
         } 
-        // Handle inStock (assuming checkboxes pass true/false for checked/unchecked)
-        // This logic needs refinement based on how the Checkbox state is managed for 'inStock'
-        // For now, let's assume a specific handler for stock might be better.
+        // Handle inStock
         else if (filterType === 'inStock') {
-             // Example: If value is true/false, set directly. If it's to *unset* the filter, set to null.
-             // This needs adjustment based on FilterSidebar's implementation.
-             newValues = prev.inStock === value ? null : value; // Toggle or unset
+             newValues = prev.inStock === value ? null : value;
         }
         // Handle potential future non-array, non-price filters
         else {
@@ -222,7 +237,7 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
   return (
     <Box
       sx={{
-        px: { xs: 0, sm: 5 },
+        px: { xs: 0.5, sm: 5 },
         height: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -388,8 +403,7 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
               flex: 1,
               overflowY: isMobile ? "visible" : "auto",
               mt: 3,
-              pr: isMobile ? 0 : 1,
-              px: { xs: 2, sm: 0 }, // Add padding on mobile
+              px: { xs: 0, sm: 0 }, // Add padding on mobile
             }}
           >
             {displayedShoes.length === 0 && (

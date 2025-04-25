@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, IconButton, Link, Typography } from "@mui/material";
+import { Box, IconButton, Link, Typography, Chip } from "@mui/material";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -25,6 +25,8 @@ export type Shoe = {
     material: string;
     gender: string;
     date: string;
+    isOnSale: boolean;
+    originalPrice: number;
 };
 
 type ShoesCardProps = {
@@ -67,7 +69,7 @@ const ShoesCard: React.FC<ShoesCardProps> = ({ shoe }) => {
                 display: 'block'
             }}
         >
-            <Box sx={{ width: "100%", minHeight: 220, position: 'relative' }} boxShadow={1} p={1} borderRadius={3}>
+            <Box sx={{ width: "100%", minHeight: 220, position: 'relative' }} boxShadow={0} p={0} borderRadius={3}>
                 <IconButton
                     onClick={handleFavoriteClick}
                     sx={{
@@ -105,33 +107,57 @@ const ShoesCard: React.FC<ShoesCardProps> = ({ shoe }) => {
                     />
                 </Box>
 
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography sx={{ color: "GrayText", fontSize: 13, mt: 1 }}>
-                        {shoe.category}
-                    </Typography>
+                <Box sx={{ marginTop: 1.5 }}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Typography sx={{ color: "GrayText", fontSize: {xs: 13, md: 14} }}>
+                            {shoe.category}
+                        </Typography>
+
+                        <Box sx={{ display: "flex", alignItems: "center", mx: 2 }}>
+                            <Box
+                                sx={{
+                                    width: {xs: 10, md: 15},
+                                    height: {xs: 10, md: 15},
+                                    border: "1px solid black",
+                                    backgroundColor: "var(--accent)",
+                                }}
+                            ></Box>
+                            <Typography sx={{ fontSize: {xs: 13, md: 14} }}>+{shoe.colors.length}</Typography>
+                        </Box>
+                    </Box>
+
+                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <Typography sx={{ fontSize: {xs: 13.5, md:15}, fontWeight: 600, color: 'black' }}>
+                            {shoe.name}
+                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            {shoe.isOnSale && (
+                                <Typography sx={{ fontSize: 15, color: 'gray', textDecoration: 'line-through' }}>
+                                    ${shoe.originalPrice}
+                                </Typography>
+                            )}
+                            <Typography sx={{ fontSize: 15, fontWeight: 500, color: shoe.isOnSale ? '#ff4081' : 'black' }}>
+                                ${shoe.price}
+                            </Typography>
+                        </Box>
+                    </Box>
                 </Box>
 
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1 }}>
-                    <Typography
+                {shoe.isOnSale && (
+                    <Chip
+                        label="SALE"
+                        size="small"
                         sx={{
-                            fontSize: { xs: 15, md: 17 },
-                            fontWeight: 700,
-                            color: "var(--secondary)",
+                            position: 'absolute',
+                            top: 8,
+                            left: 8,
+                            backgroundColor: '#ff4081',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            zIndex: 2,
                         }}
-                    >
-                        {shoe.name}
-                    </Typography>
-                    <Typography
-                        sx={{
-                            fontSize: 15,
-                            fontWeight: 500,
-                            color: "var(--secondary)",
-                            ml: 1
-                        }}
-                    >
-                        ${shoe.price}
-                    </Typography>
-                </Box>
+                    />
+                )}
             </Box>
         </Link>
     );

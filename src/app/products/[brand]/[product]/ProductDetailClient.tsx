@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography, Button, Link } from "@mui/material";
+import { Box, Typography, Button, Link, Rating, Accordion, AccordionSummary, AccordionDetails, Chip } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
 import { Shoe } from "@/components/ShoesCard";
@@ -9,6 +9,7 @@ import { keyframes } from "@emotion/react";
 import { addToCart as addToCartUtil } from "@/utils/cart";
 import { useNotification } from '@/context/NotificationContext';
 import { useCart } from '@/context/CartContext';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const fadeIn = keyframes`
   from { opacity: 0.3; }
@@ -69,27 +70,29 @@ export default function ProductDetailClient({
         sx={{
           display: "flex",
           justifyContent: "center",
-          p: 5,
+          p: { xs: 1, md: 5 },
           flexWrap: "wrap",
-          gap: 20,
+          gap: {xs: 20, md:10},
         }}
       >
         <Box
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
-            gap: { xs: 1, md: 2 },
+            gap: { xs: 2, md: 2 },
+            width: { xs: "100%", md: "auto" },
+            px: { xs: 2, md: 0 },
           }}
         >
           <Box
             sx={{
-              width: { xs: "100%", md: 500 },
+              width: { xs: "100%", md: 550 },
               height: 550,
               position: "relative",
               overflow: "hidden",
               animation: `${fadeIn} 0.4s ease-in-out`,
             }}
-            key={mainImage} // force re-render for animation
+            key={mainImage}
           >
             <Image
               src={mainImage}
@@ -106,6 +109,7 @@ export default function ProductDetailClient({
               justifyContent: { xs: "normal", md: "space-between" },
               height: { xs: 0, md: "70vh" },
               gap: { xs: 2 },
+              px: { xs: 2, md: 0 },
             }}
           >
             {images.map((image, key) => (
@@ -135,35 +139,136 @@ export default function ProductDetailClient({
           </Box>
         </Box>
 
-        {/* Product Info */}
         <Box
           sx={{
             width: "350px",
             p: 2,
             border: "1px solid #eee",
             borderRadius: 3,
+            mb: { xs: 10, md: 0 },
           }}
         >
           <PhraseLink
             current={product.name}
             previous={["HOME", "PRODUCTS", product.brand]}
           />
-
+          <Box sx={{ display: 'flex',gap: 1, alignItems: 'center' }}>
           <Typography sx={{ fontSize: 13, color: "gray", my: 1 }}>
             {product.category} / {product.brand}
           </Typography>
+          {product.tags.map((tag, key) => (
+            <Chip
+              key={key}
+              label={tag}
+              size="small"
+              sx={{
+                fontSize: 12,
+                color: "gray",
+                border: "1px solid #eee",
+                backgroundColor: "transparent",
+                '&:hover': {
+                  backgroundColor: '#f5f5f5'
+                }
+              }}
+            />
+          ))}
+          </Box>
 
           <Typography sx={{ fontSize: 24, fontWeight: "bold", mb: 1 }}>
             {product.name}
           </Typography>
 
-          <Typography sx={{ fontSize: 22, color: "#ff4081", mb: 1 }}>
-            ${product.price}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
+            {product.isOnSale && (
+              <Typography sx={{ fontSize: 20, color: "gray", textDecoration: 'line-through' }}>
+                ${product.originalPrice}
+              </Typography>
+            )}
+            <Typography sx={{ fontSize: 22, color: product.isOnSale ? "#ff4081" : "inherit" }}>
+              ${product.price}
+            </Typography>
+            {product.isOnSale && (
+              <Chip
+                label="SALE"
+                size="small"
+                sx={{
+                  backgroundColor: '#ff4081',
+                  color: 'white',
+                  fontWeight: 'bold',
+                }}
+              />
+            )}
+          </Box>
 
           <Typography sx={{ fontSize: 14, color: "#555", mb: 2 }}>
             {product.description}
           </Typography>
+
+
+          <Accordion sx={{ mb: 2, boxShadow: 'none', border: '1px solid #eee', borderRadius: '8px !important' }}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              sx={{
+                '& .MuiAccordionSummary-content': {
+                  margin: '8px 0',
+                }
+              }}
+            >
+              <Typography sx={{ fontWeight: 600 }}>More Details</Typography>
+            </AccordionSummary>
+            <AccordionDetails sx={{ pt: 0 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography sx={{ fontSize: 14, color: "#555", minWidth: 80 }}>
+                    <span style={{ fontWeight: "bold" }}>Gender:</span>
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, color: "#555" }}>
+                    {product.gender}
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography sx={{ fontSize: 14, color: "#555", minWidth: 80 }}>
+                    <span style={{ fontWeight: "bold" }}>Rating:</span>
+                  </Typography>
+                  <Rating 
+                    value={product.rating} 
+                    readOnly 
+                    precision={0.5}
+                    size="small"
+                    sx={{ 
+                      '& .MuiRating-iconFilled': {
+                        color: '#ffc107',
+                      },
+                    }}
+                  />
+                  <Typography sx={{ fontSize: 14, color: "#555" }}>
+                    ({product.rating})
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography sx={{ fontSize: 14, color: "#555", minWidth: 80 }}>
+                    <span style={{ fontWeight: "bold" }}>Reviews:</span>
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, color: "#555" }}>
+                    {product.reviews}
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography sx={{ fontSize: 14, color: "#555", minWidth: 80 }}>
+                    <span style={{ fontWeight: "bold" }}>Material:</span>
+                  </Typography>
+                  {product.material.map((mats, key) => (
+                    <Typography key={key} sx={{ fontSize: 14, color: "#555" }}>
+                      {mats}
+                    </Typography>
+                  ))}
+                </Box>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
 
           <Typography fontWeight={600}>Colors</Typography>
           <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
@@ -246,7 +351,7 @@ function PhraseLink({
       {previous.map((link, key) => (
         <Box key={key} sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <Link
-            href="/"
+            href="/products"
             sx={{ color: "GrayText", fontSize: 13, textDecoration: "none" }}
           >
             {link}

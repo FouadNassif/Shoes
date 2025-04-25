@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from "react";
-import { Box, Checkbox, FormControlLabel, FormGroup, Typography, Slider, Accordion, AccordionSummary, AccordionDetails, Button } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, FormGroup, Typography, Slider, Accordion, AccordionSummary, AccordionDetails, Button, Radio, RadioGroup } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import { sizes as allSizes, colors as allColors, categories as allCategories, brands as allBrands } from "@/data/Shoes";
 
@@ -13,12 +13,15 @@ interface FilterSidebarProps {
         brands: string[];
         priceRange: [number, number];
         inStock: boolean | null;
+        gender: string[];
     };
     onFilterChange: (filterType: keyof FilterSidebarProps['filters'], value: any) => void;
     onPriceChange: (newValue: number | number[]) => void;
     onStockChange: (stockStatus: boolean | null) => void;
     onClearFilters: () => void;
 }
+
+const genders = ["Men", "Women"];
 
 export default function FilterSidebar({ filters, onFilterChange, onPriceChange, onStockChange, onClearFilters }: FilterSidebarProps) {
   const [expanded, setExpanded] = useState<string | false>(false);
@@ -28,7 +31,7 @@ export default function FilterSidebar({ filters, onFilterChange, onPriceChange, 
     setExpanded(isExpanded ? panel : false);
   };
 
-  // Handler for checkbox changes (categories, brands, sizes, colors)
+  
   const handleCheckboxChange = (filterType: keyof FilterSidebarProps['filters'], value: string | number) => (event: React.ChangeEvent<HTMLInputElement>) => {
       onFilterChange(filterType, value);
   };
@@ -48,7 +51,6 @@ export default function FilterSidebar({ filters, onFilterChange, onPriceChange, 
        setCurrentPriceRange(newValue as [number, number]);
    };
 
-
   return (
     <Box sx={{ width: '100%', pr: 0 }}> {/* Use full width of parent, remove padding right */}
       {/* Add Clear Button at the top */}
@@ -60,6 +62,31 @@ export default function FilterSidebar({ filters, onFilterChange, onPriceChange, 
       >
           Clear All Filters
       </Button>
+
+      {/* Gender Filter */}
+      <Accordion expanded={expanded === "gender"} onChange={handleAccordionChange("gender")}>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography variant="subtitle1" fontWeight={600}>Gender</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ p: 1 }}>
+          <RadioGroup
+            value={filters.gender[0] || ""}
+            onChange={(e) => {
+              // Clear all genders and set the selected one
+              onFilterChange('gender', e.target.value);
+            }}
+          >
+            {genders.map((gender) => (
+              <FormControlLabel
+                key={`gender-${gender}`}
+                control={<Radio size="small" />}
+                value={gender}
+                label={gender === "Men" ? "For Him" : "For Her"}
+              />
+            ))}
+          </RadioGroup>
+        </AccordionDetails>
+      </Accordion>
 
       {/* Size Filter */}
       <Accordion expanded={expanded === "size"} onChange={handleAccordionChange("size")}>
@@ -87,7 +114,6 @@ export default function FilterSidebar({ filters, onFilterChange, onPriceChange, 
         <AccordionSummary expandIcon={<ExpandMore />}><Typography variant="subtitle1" fontWeight={600}>Availability</Typography></AccordionSummary>
         <AccordionDetails sx={{ p: 1 }}>
           <FormGroup sx={{ mb: 1 }}>
-            {/* Pass true for In Stock, false for Out of Stock */}
             <FormControlLabel 
                 control={<Checkbox checked={filters.inStock === true} onChange={handleStockCheckboxChange(true)} />} 
                 label="In Stock" 
@@ -96,7 +122,6 @@ export default function FilterSidebar({ filters, onFilterChange, onPriceChange, 
                 control={<Checkbox checked={filters.inStock === false} onChange={handleStockCheckboxChange(false)} />} 
                 label="Out of Stock" 
             />
-             {/* Add an 'Any' option maybe? Or handle unchecking both */}
           </FormGroup>
         </AccordionDetails>
       </Accordion>
@@ -118,7 +143,7 @@ export default function FilterSidebar({ filters, onFilterChange, onPriceChange, 
       </Accordion>
 
       {/* Colors Filter */}
-      <Accordion expanded={expanded === "color"} onChange={handleAccordionChange("color")}>
+      <Accordion expanded={expanded === "colors"} onChange={handleAccordionChange("colors")}>
         <AccordionSummary expandIcon={<ExpandMore />}><Typography variant="subtitle1" fontWeight={600}>Colors</Typography></AccordionSummary>
         <AccordionDetails sx={{ p: 1 }}>
           <FormGroup sx={{ mb: 1 }}>
@@ -171,7 +196,6 @@ export default function FilterSidebar({ filters, onFilterChange, onPriceChange, 
                 />
             </AccordionDetails>
         </Accordion>
-      
     </Box>
   );
 }
