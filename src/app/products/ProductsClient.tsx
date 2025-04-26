@@ -280,9 +280,10 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          bgcolor: "var(--primary)",
         }}
       >
-        <CircularProgress />
+        <CircularProgress sx={{ color: "var(--secondary)" }} />
       </Box>
     );
   }
