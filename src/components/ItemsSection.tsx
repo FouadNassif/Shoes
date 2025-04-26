@@ -22,10 +22,34 @@ export default function ItemSection({title, items, path}: {title: string, items:
   return (
     <Box sx={{ mt: 10, px: 2 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap" }}>
-        <Typography variant="h5" sx={{ fontSize: 32, fontWeight: "700" }} className="titleFont">
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            fontSize: { xs: 28, md: 32 },
+            fontFamily: "var(--font-bangers)",
+            letterSpacing: "0.02em",
+            color: "var(--secondary)",
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)"
+          }}
+        >
           {title}
         </Typography>
-        <Link href={path} sx={{ display: "flex", alignItems: "center", mt: { xs: 1, sm: 0 }, color: "var(--secondary)", textDecoration: "none", cursor: "pointer" }}>
+        <Link 
+          href={path} 
+          sx={{ 
+            display: "flex", 
+            alignItems: "center", 
+            mt: { xs: 1, sm: 0 }, 
+            color: "var(--secondary)", 
+            textDecoration: "none", 
+            cursor: "pointer",
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 600,
+            '&:hover': {
+              color: "var(--accent)"
+            }
+          }}
+        >
           View All <EastIcon />
         </Link>
       </Box>
@@ -64,10 +88,30 @@ export default function ItemSection({title, items, path}: {title: string, items:
 
       {/* Scroll Buttons */}
       <Box sx={{ display: {xs:"none", md:"flex"}, justifyContent: "center", gap: 2, mt: 2 }}>
-        <IconButton onClick={() => scroll("left")} sx={{ bgcolor: "white", boxShadow: 5 }}>
+        <IconButton 
+          onClick={() => scroll("left")} 
+          sx={{ 
+            bgcolor: "white", 
+            boxShadow: 5,
+            '&:hover': {
+              bgcolor: "var(--accent)",
+              color: "white"
+            }
+          }}
+        >
           <ArrowBackIos />
         </IconButton>
-        <IconButton onClick={() => scroll("right")} sx={{ bgcolor: "white", boxShadow: 5 }}>
+        <IconButton 
+          onClick={() => scroll("right")} 
+          sx={{ 
+            bgcolor: "white", 
+            boxShadow: 5,
+            '&:hover': {
+              bgcolor: "var(--accent)",
+              color: "white"
+            }
+          }}
+        >
           <ArrowForwardIos />
         </IconButton>
       </Box>

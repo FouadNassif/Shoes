@@ -1,0 +1,60 @@
+:root {
+  --font-playfair: var(--font-playfair);
+  --font-montserrat: var(--font-montserrat);
+  --font-poppins: var(--font-poppins);
+  --font-bangers: var(--font-bangers);
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-poppins);
+}
+
+/* Typography classes */
+.titleFont {
+  font-family: var(--font-playfair) !important;
+  font-weight: 700 !important;
+}
+
+.subtitleFont {
+  font-family: var(--font-montserrat) !important;
+  font-weight: 600 !important;
+}
+
+.bodyFont {
+  font-family: var(--font-poppins) !important;
+  font-weight: 400 !important;
+}
+
+/* Section titles */
+.newCollectionTitle {
+  font-family: var(--font-playfair) !important;
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.newThisWeekTitle {
+  font-family: var(--font-bangers) !important;
+  font-size: 2.5rem !important;
+  letter-spacing: 0.02em !important;
+  color: var(--secondary) !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.latestReleaseTitle {
+  font-family: var(--font-bangers) !important;
+  font-size: 2.5rem !important;
+  letter-spacing: 0.02em !important;
+  color: var(--secondary) !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.sectionTitle {
+  font-family: var(--font-playfair) !important;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* ... rest of your CSS ... */ 

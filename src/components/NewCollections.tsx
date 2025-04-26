@@ -10,14 +10,33 @@ export default function NewCollections() {
       {/* Left Column */}
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: 350, flex: 1 }}>
         <Box>
-          <Typography sx={{ fontSize: 32, fontWeight: "700" }} className="titleFont">New Collection</Typography>
-          <Typography sx={{ fontSize: 18, fontWeight: "300" }}>Summer 2025</Typography>
+          <Typography 
+            sx={{ 
+              fontSize: { xs: 28, md: 32 }, 
+              fontWeight: "700",
+              fontFamily: "var(--font-playfair)",
+              letterSpacing: "-0.02em",
+              mb: 1
+            }}
+          >
+            New Collection
+          </Typography>
+          <Typography 
+            sx={{ 
+              fontSize: { xs: 16, md: 18 }, 
+              fontWeight: "300",
+              fontFamily: "var(--font-montserrat)",
+              color: "text.secondary"
+            }}
+          >
+            Summer 2025
+          </Typography>
           {isMobile ? (
-        <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-        <Item imgSrc="/assets/img/shoes/img1.jpg" alt="New Collections Image 1" />
-        <Item imgSrc="/assets/img/shoes/img2.jpeg" alt="New Collections Image 2" />
-        </Box>
-      ): null}
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Item imgSrc="/assets/img/shoes/img1.jpg" alt="New Collections Image 1" />
+              <Item imgSrc="/assets/img/shoes/img2.jpeg" alt="New Collections Image 2" />
+            </Box>
+          ): null}
         </Box>
         <Button
           sx={{
@@ -27,23 +46,27 @@ export default function NewCollections() {
             backgroundColor: "var(--accent)",
             display: "flex",
             justifyContent: "space-between",
-            p: 1.5
+            p: 1.5,
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 600,
+            '&:hover': {
+              backgroundColor: "var(--accent)",
+              opacity: 0.9
+            }
           }}
           href="/products"
         >
-          <Typography>Go To Shop</Typography>
+          <Typography sx={{ fontFamily: "var(--font-montserrat)" }}>Go To Shop</Typography>
           <EastIcon />
         </Button>
       </Box>
       {/* Image Cards */}
       {!isMobile ? (
         <>
-        <Item imgSrc="/assets/img/shoes/img1.jpg" alt="New Collections Image 1" />
-        <Item imgSrc="/assets/img/shoes/img2.jpeg" alt="New Collections Image 2" />
+          <Item imgSrc="/assets/img/shoes/img1.jpg" alt="New Collections Image 1" />
+          <Item imgSrc="/assets/img/shoes/img2.jpeg" alt="New Collections Image 2" />
         </>
       ): null}
-      
-
     </Box>
   );
 }
@@ -51,29 +74,28 @@ export default function NewCollections() {
 function Item({ imgSrc, alt }: { alt: string; imgSrc: string }) {
   return (
     <Box
-  sx={{
-    position: "relative",
-    flex: "1 1 0", // Allow shrink and grow
-    minWidth: 120, // Ensure doesn't get too small
-    height: {xs: 200, md: 350},
-    borderRadius: 1,
-    overflow: "hidden",
-    border: "1px solid var(--secondary)",
-  }}
-  className="card"
->
-
-<Image
-  src={imgSrc}
-  alt={alt}
-  width={400}
-  height={350}
-  style={{ objectFit: "cover", width: "100%", height: "100%" }}
-  priority
-/>
-
-</Box>
-
-
+      sx={{
+        position: "relative",
+        flex: "1 1 0",
+        minWidth: 120,
+        height: {xs: 200, md: 350},
+        borderRadius: 1,
+        overflow: "hidden",
+        border: "1px solid var(--secondary)",
+        transition: "transform 0.3s ease",
+        '&:hover': {
+          transform: "scale(1.02)"
+        }
+      }}
+    >
+      <Image
+        src={imgSrc}
+        alt={alt}
+        width={400}
+        height={350}
+        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+        priority
+      />
+    </Box>
   );
 }
