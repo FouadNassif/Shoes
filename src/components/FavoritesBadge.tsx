@@ -4,17 +4,28 @@ import { useEffect, useState } from "react";
 import { getFavoritesCount } from "@/utils/favorites";
 import Link from "next/link";
 
+const FAVORITES_CHANGED_EVENT = 'favoritesChanged';
+
 export default function FavoritesBadge() {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
+        // Initial count
         setCount(getFavoritesCount());
-        // Update count when storage changes
-        const handleStorageChange = () => {
+
+        // Update count when favorites change
+        const handleFavoritesChange = () => {
             setCount(getFavoritesCount());
         };
-        window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
+
+        // Listen for both storage and custom events
+        window.addEventListener('storage', handleFavoritesChange);
+        window.addEventListener(FAVORITES_CHANGED_EVENT, handleFavoritesChange);
+
+        return () => {
+            window.removeEventListener('storage', handleFavoritesChange);
+            window.removeEventListener(FAVORITES_CHANGED_EVENT, handleFavoritesChange);
+        };
     }, []);
 
     return (

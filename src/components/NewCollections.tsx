@@ -6,17 +6,17 @@ import Image from "next/image";
 export default function NewCollections() {
   const isMobile = useMediaQuery("(max-width:900px)");
   return (
-    <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 2, mt: {xs: 5, md: 10}, px: 2 }}>
+    <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 2, mt: {xs: 5, md: 10}, px: {xs: 1, md: 2} }}>
       {/* Left Column */}
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: 350, flex: 1 }}>
         <Box>
           <Typography sx={{ fontSize: 32, fontWeight: "700" }} className="titleFont">New Collection</Typography>
           <Typography sx={{ fontSize: 18, fontWeight: "300" }}>Summer 2025</Typography>
           {isMobile ? (
-        <>
+        <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
         <Item imgSrc="/assets/img/shoes/img1.jpg" alt="New Collections Image 1" />
         <Item imgSrc="/assets/img/shoes/img2.jpeg" alt="New Collections Image 2" />
-        </>
+        </Box>
       ): null}
         </Box>
         <Button
@@ -29,6 +29,7 @@ export default function NewCollections() {
             justifyContent: "space-between",
             p: 1.5
           }}
+          href="/products"
         >
           <Typography>Go To Shop</Typography>
           <EastIcon />
@@ -54,7 +55,7 @@ function Item({ imgSrc, alt }: { alt: string; imgSrc: string }) {
     position: "relative",
     flex: "1 1 0", // Allow shrink and grow
     minWidth: 120, // Ensure doesn't get too small
-    height: 350,
+    height: {xs: 200, md: 350},
     borderRadius: 1,
     overflow: "hidden",
     border: "1px solid var(--secondary)",

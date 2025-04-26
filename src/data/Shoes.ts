@@ -8,6 +8,7 @@ const shoeNames = [
     "Phantom", "Ghost", "Shadow", "Eclipse", "Nebula", "Cosmos", "Stellar"
 ];
 
+
 const adjectives = [
     "Premium", "Elite", "Pro", "Ultra", "Max", "Super", "Hyper", "Mega",
     "Turbo", "Quantum", "Atomic", "Cosmic", "Galactic", "Stellar", "Lunar",
@@ -35,6 +36,8 @@ export const colors = [
     "Purple", "Pink", "Brown", "Gray", "Silver", "Gold", "Navy",
     "Burgundy", "Teal", "Coral", "Lavender", "Mint", "Olive"
 ];
+
+export const genders = ["Men", "Women"];
 
 export const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48];
 

@@ -149,8 +149,8 @@ export default function ProductDetailClient({
           }}
         >
           <PhraseLink
-            current={product.name}
-            previous={["HOME", "PRODUCTS", product.brand]}
+            productName={product.name}
+            Brand={product.brand}
           />
           <Box sx={{ display: 'flex',gap: 1, alignItems: 'center' }}>
           <Typography sx={{ fontSize: 13, color: "gray", my: 1 }}>
@@ -340,29 +340,45 @@ export default function ProductDetailClient({
 }
 
 function PhraseLink({
-  previous,
-  current,
+  productName,
+  Brand,
 }: {
-  previous: string[];
-  current: string;
+  productName: string;
+  Brand: string;
 }) {
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mb: 1 }}>
-      {previous.map((link, key) => (
-        <Box key={key} sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+          <Link
+            href="/home"
+            sx={{ color: "GrayText", fontSize: 13, textDecoration: "none" }}
+          >
+            HOME
+          </Link>
+          <Typography sx={{ fontSize: 13 }}>/</Typography>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <Link
             href="/products"
             sx={{ color: "GrayText", fontSize: 13, textDecoration: "none" }}
           >
-            {link}
+            PRODUCTS
           </Link>
           <Typography sx={{ fontSize: 13 }}>/</Typography>
         </Box>
-      ))}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+          <Link
+            href={`/products?brands=${Brand}`}
+            sx={{ color: "GrayText", fontSize: 13, textDecoration: "none" }}
+          >
+            {Brand}
+          </Link>
+          <Typography sx={{ fontSize: 13 }}>/</Typography>
+        </Box>
       <Typography
         sx={{ fontSize: 13, color: "var(--secondary)", fontWeight: 500 }}
       >
-        {current}
+        {productName}
       </Typography>
     </Box>
   );

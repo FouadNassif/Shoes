@@ -1,7 +1,15 @@
+"use client"
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Category() {
+  const router = useRouter();
+
+  const handleCategoryClick = (gender: string) => {
+    router.push(`/products?gender=${gender.toLowerCase()}`);
+  };
+
   return (
     <Box
       sx={{
@@ -13,11 +21,12 @@ export default function Category() {
       }}
     >
       {[
-        { label: "For Him", src: "/assets/img/shoes/img8.jpg" },
-        { label: "For Her", src: "/assets/img/shoes/img7.jpg" },
+        { label: "For Him", src: "/assets/img/shoes/img8.jpg", gender: "Men" },
+        { label: "For Her", src: "/assets/img/shoes/img7.jpg", gender: "Women" },
       ].map((item, index) => (
         <Box
           key={index}
+          onClick={() => handleCategoryClick(item.gender)}
           sx={{
             position: "relative",
             width: { xs: "100%", sm: "45%", md: "30%" },

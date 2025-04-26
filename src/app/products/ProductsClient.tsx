@@ -19,6 +19,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material";
+import { useSearchParams, useRouter } from "next/navigation";
 
 type ProductsClientProps = {
   shoes: Shoe[];
@@ -52,11 +53,46 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
   const isMobile = useMediaQuery("(max-width:900px)");
   const [isReady, setIsReady] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   // --- State for Filters, Search, Sort --- 
-  const [sort, setSort] = useState<string>("default"); // e.g., 'price-asc', 'price-desc', 'name-asc'
-  const [filters, setFilters] = useState<AppliedFilters>(initialFilters); // Use initial state constant
-  // --------------------------------------
+  const [sort, setSort] = useState<string>(searchParams.get('sort') || "default");
+  const [filters, setFilters] = useState<AppliedFilters>(() => {
+    return {
+      searchQuery: searchParams.get('search') || "",
+      categories: searchParams.get('categories')?.split(',') || [],
+      sizes: searchParams.get('sizes')?.split(',').map(Number) || [],
+      colors: searchParams.get('colors')?.split(',') || [],
+      brands: searchParams.get('brands')?.split(',') || [],
+      priceRange: [
+        Number(searchParams.get('minPrice')) || 0,
+        Number(searchParams.get('maxPrice')) || 200
+      ],
+      inStock: searchParams.get('inStock') === 'true' ? true : 
+               searchParams.get('inStock') === 'false' ? false : null,
+      gender: searchParams.get('gender')?.split(',') || [],
+    };
+  });
+
+  // Update filters when URL parameters change
+  useEffect(() => {
+    setFilters({
+      searchQuery: searchParams.get('search') || "",
+      categories: searchParams.get('categories')?.split(',') || [],
+      sizes: searchParams.get('sizes')?.split(',').map(Number) || [],
+      colors: searchParams.get('colors')?.split(',') || [],
+      brands: searchParams.get('brands')?.split(',') || [],
+      priceRange: [
+        Number(searchParams.get('minPrice')) || 0,
+        Number(searchParams.get('maxPrice')) || 200
+      ],
+      inStock: searchParams.get('inStock') === 'true' ? true : 
+               searchParams.get('inStock') === 'false' ? false : null,
+      gender: searchParams.get('gender')?.split(',') || [],
+    });
+    setSort(searchParams.get('sort') || "default");
+  }, [searchParams]);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 0);
@@ -157,65 +193,82 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
   }, [shoes, filters, sort]);
   // -------------------------------------
 
-  // --- Handlers to update filters --- 
+  // Function to update URL with current filters
+  const updateUrlWithFilters = (newFilters: AppliedFilters, newSort: string) => {
+    const params = new URLSearchParams();
+    
+    if (newFilters.searchQuery) params.set('search', newFilters.searchQuery);
+    if (newFilters.categories.length) params.set('categories', newFilters.categories.join(','));
+    if (newFilters.sizes.length) params.set('sizes', newFilters.sizes.join(','));
+    if (newFilters.colors.length) params.set('colors', newFilters.colors.join(','));
+    if (newFilters.brands.length) params.set('brands', newFilters.brands.join(','));
+    if (newFilters.priceRange[0] > 0) params.set('minPrice', newFilters.priceRange[0].toString());
+    if (newFilters.priceRange[1] < 200) params.set('maxPrice', newFilters.priceRange[1].toString());
+    if (newFilters.inStock !== null) params.set('inStock', newFilters.inStock.toString());
+    if (newFilters.gender.length) params.set('gender', newFilters.gender.join(','));
+    if (newSort !== 'default') params.set('sort', newSort);
+
+    router.push(`/products?${params.toString()}`);
+  };
+
+  // Update handlers to also update URL
   const handleSearchChange = (query: string) => {
-      setFilters(prev => ({ ...prev, searchQuery: query }));
+    const newFilters = { ...filters, searchQuery: query };
+    setFilters(newFilters);
+    updateUrlWithFilters(newFilters, sort);
   };
 
   const handleFilterChange = (filterType: keyof AppliedFilters, value: any) => {
     setFilters(prev => {
-        const currentValues = prev[filterType];
-        let newValues;
+      const currentValues = prev[filterType];
+      let newValues;
 
-        // Handle array filters (categories, brands, sizes, colors)
-        if (Array.isArray(currentValues)) {
-            if (filterType === 'gender') {
-                // For gender, just set the single value
-                newValues = value ? [value] : [];
-            } else {
-                if ((currentValues as any[]).includes(value)) {
-                    newValues = (currentValues as any[]).filter(v => v !== value);
-                } else {
-                    newValues = [...currentValues, value];
-                }
-            }
-        } 
-        // Handle price range
-        else if (filterType === 'priceRange') {
-             newValues = value as [number, number];
-        } 
-        // Handle inStock
-        else if (filterType === 'inStock') {
-             newValues = prev.inStock === value ? null : value;
+      if (Array.isArray(currentValues)) {
+        if (filterType === 'gender') {
+          newValues = value ? [value] : [];
+        } else {
+          if ((currentValues as any[]).includes(value)) {
+            newValues = (currentValues as any[]).filter(v => v !== value);
+          } else {
+            newValues = [...currentValues, value];
+          }
         }
-        // Handle potential future non-array, non-price filters
-        else {
-            newValues = value; 
-        }
+      } else if (filterType === 'priceRange') {
+        newValues = value as [number, number];
+      } else if (filterType === 'inStock') {
+        newValues = prev.inStock === value ? null : value;
+      } else {
+        newValues = value;
+      }
 
-        return { ...prev, [filterType]: newValues };
+      const newFilters = { ...prev, [filterType]: newValues };
+      updateUrlWithFilters(newFilters, sort);
+      return newFilters;
     });
   };
 
-  // Specific handler for Price Range Slider
   const handlePriceChange = (newValue: number | number[]) => {
-    setFilters(prev => ({ ...prev, priceRange: newValue as [number, number] }));
+    const newFilters = { ...filters, priceRange: newValue as [number, number] };
+    setFilters(newFilters);
+    updateUrlWithFilters(newFilters, sort);
   };
 
-  // Specific handler for In Stock / Out of Stock - Adapt based on FilterSidebar Checkbox logic
-  const handleStockChange = (stockStatus: boolean | null) => { // Pass true for In Stock, false for Out, null for Any
-      setFilters(prev => ({ ...prev, inStock: stockStatus }));
+  const handleStockChange = (stockStatus: boolean | null) => {
+    const newFilters = { ...filters, inStock: stockStatus };
+    setFilters(newFilters);
+    updateUrlWithFilters(newFilters, sort);
   };
 
-  // --- Handler for Sort Select --- 
   const handleSortChange = (event: SelectChangeEvent<string>) => {
-      setSort(event.target.value as string);
+    const newSort = event.target.value as string;
+    setSort(newSort);
+    updateUrlWithFilters(filters, newSort);
   };
 
-  // --- Handler to Clear Filters --- 
   const handleClearFilters = () => {
-      setFilters(initialFilters);
-      setSort("default"); // Also reset sort when clearing
+    setFilters(initialFilters);
+    setSort("default");
+    router.push('/products');
   };
   // ---------------------------------
 

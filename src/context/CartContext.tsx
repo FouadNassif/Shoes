@@ -53,8 +53,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       return getCart();
   };
 
-  // Function provided by context to get the current total
   const getCartTotal = (): number => {
+    console.log(getCartTotalUtil());
       return getCartTotalUtil();
   };
 

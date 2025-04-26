@@ -37,7 +37,6 @@ export default function CartPage() {
         lastName: '',
         address: '',
         city: '',
-        postalCode: '',
     });
     const [errors, setErrors] = useState<Partial<typeof formData>>({});
     const [paymentMethod, setPaymentMethod] = useState('delivery');
@@ -89,10 +88,6 @@ export default function CartPage() {
             newErrors.city = 'City is required';
             isValid = false;
         }
-        if (!formData.postalCode.trim()) {
-            newErrors.postalCode = 'Postal code is required';
-            isValid = false;
-        }
 
         setErrors(newErrors);
         return isValid;
@@ -125,7 +120,6 @@ export default function CartPage() {
             message += `%0A*Shipping Address:*%0A`;
             message += `  Address: ${formData.address}%0A`;
             message += `  City: ${formData.city}%0A`;
-            message += `  Postal Code: ${formData.postalCode}%0A`;
             message += `%0A*Order Items:*%0A`;
 
             localCartItems.forEach(item => {
@@ -156,8 +150,68 @@ export default function CartPage() {
     return (
         <>
             <Navbar />
-            <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 5, px: { xs: 2, md: 10 }, mt: 1 }}>
-                <Box>
+            <Box sx={{ 
+                display: "grid", 
+                gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, 
+                gap: 5, 
+                px: { xs: 2, md: 10 }, 
+                mt: 1,
+                gridTemplateAreas: {
+                    xs: `
+                        "order"
+                        "checkout"
+                    `,
+                    md: `
+                        "checkout order"
+                    `
+                }
+            }}>
+                {/* Order Summary - Will appear at top on mobile */}
+                <Box sx={{ 
+                    p: 2, 
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    gridArea: 'order',
+                    border: "1px solid var(--accent)"
+                }}>
+                    <Typography sx={{ fontSize: 30, fontWeight: 900, mb: 1 }} className="titleFont">YOUR ORDER</Typography>
+
+                    <Box sx={{ 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 2,
+                        mb: 4
+                    }}>
+                        {localCartItems.map((item) => (
+                            <CartItem key={item.id} item={item} updateLocalCart={updateLocalCart} />
+                        ))}
+                    </Box>
+
+                    <Box sx={{ 
+                        borderTop: '1px solid #e0e0e0',
+                        pt: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 1
+                    }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Typography>Subtotal</Typography>
+                            <Typography>${subtotal.toFixed(2)}</Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Typography>Shipping</Typography>
+                            <Typography>${shipping.toFixed(2)}</Typography>
+                        </Box>
+                        <Divider sx={{ my: 1 }} />
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                            <Typography>Total</Typography>
+                            <Typography>${total.toFixed(2)}</Typography>
+                        </Box>
+                    </Box>
+                </Box>
+
+                {/* Checkout Form - Will appear at bottom on mobile */}
+                <Box sx={{ gridArea: 'checkout' }}>
                     <Typography sx={{ fontSize: 30, fontWeight: 900, mb: 1 }} className="titleFont">CHECKOUT</Typography>
 
                     <Box sx={{ display: "flex", gap: 5, my: 2, borderBottom: '1px solid #e0e0e0', pb: 1 }}>
@@ -177,10 +231,7 @@ export default function CartPage() {
                                 <TextInput name="lastName" placeholder="Last Name *" value={formData.lastName} onChange={handleInputChange} error={!!errors.lastName} helperText={errors.lastName} />
                             </Box>
                             <TextInput name="address" placeholder="Address *" value={formData.address} onChange={handleInputChange} error={!!errors.address} helperText={errors.address} fullWidth />
-                            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 1 }}>
-                                <TextInput name="city" placeholder="City *" value={formData.city} onChange={handleInputChange} error={!!errors.city} helperText={errors.city} />
-                                <TextInput name="postalCode" placeholder="Postal Code *" value={formData.postalCode} onChange={handleInputChange} error={!!errors.postalCode} helperText={errors.postalCode} />
-                            </Box>
+                            <TextInput name="city" placeholder="City *" value={formData.city} onChange={handleInputChange} error={!!errors.city} helperText={errors.city} fullWidth />
 
                             <Button
                                 variant="contained"
@@ -240,48 +291,6 @@ export default function CartPage() {
                                 >
                                     Place Order
                                 </Button>
-                            </Box>
-                        </Box>
-                    )}
-                </Box>
-                <Box sx={{ border: "none", p: 0, display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontSize: 30, fontWeight: 900, mb: 1 }} className="titleFont">YOUR ORDER</Typography>
-
-                    <Box sx={{ 
-                        border: "1px solid #e0e0e0", 
-                        p: 2, 
-                        borderRadius: 2,
-                        mb: 3,
-                        flexGrow: 1,
-                        maxHeight: '400px',
-                        overflowY: 'auto'
-                    }}>
-                        {isLoading ? (
-                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                <CircularProgress />
-                            </Box>
-                        ) : localCartItems.length === 0 ? (
-                            <Typography sx={{ textAlign: 'center', color: 'grey.600', mt: 4 }}>Your cart is empty.</Typography>
-                        ) : (
-                            localCartItems.map((item) => (
-                                <CartItem key={`${item.id}-${item.size}-${item.color}`} item={item} updateLocalCart={updateLocalCart} />
-                            ))
-                        )}
-                    </Box>
-
-                    {localCartItems.length > 0 && (
-                        <Box sx={{ border: "1px solid #e0e0e0", p: 3, borderRadius: 2 }}>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                                <Typography sx={{ fontSize: 14 }}>Subtotal</Typography>
-                                <Typography sx={{ fontWeight: 600, fontSize: 14 }}>${subtotal.toFixed(2)}</Typography>
-                            </Box>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                                <Typography sx={{ fontSize: 14 }}>Shipping</Typography>
-                                <Typography sx={{ fontWeight: 600, fontSize: 14 }}>${shipping.toFixed(2)}</Typography>
-                            </Box>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #e0e0e0', pt: 2, mt: 2 }}>
-                                <Typography sx={{ fontWeight: 700, fontSize: 16 }}>Total</Typography>
-                                <Typography sx={{ fontWeight: 700, fontSize: 16 }}>${total.toFixed(2)}</Typography>
                             </Box>
                         </Box>
                     )}

@@ -1,12 +1,12 @@
 "use client"
 import { useRef } from "react";
-import { Box, Typography, IconButton } from "@mui/material";
+import { Box, Typography, IconButton, Link } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import EastIcon from "@mui/icons-material/East";
 import ItemCard from "@/components/ItemCard";
-import { NewThisWeekData } from "@/data/NewThisWeekData";
+import { ItemsCardType } from "@/types/Items";
 
-export default function NewThisWeek() {
+export default function ItemSection({title, items, path}: {title: string, items: ItemsCardType[], path: string}) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -23,11 +23,11 @@ export default function NewThisWeek() {
     <Box sx={{ mt: 10, px: 2 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap" }}>
         <Typography variant="h5" sx={{ fontSize: 32, fontWeight: "700" }} className="titleFont">
-          New This Week
+          {title}
         </Typography>
-        <Typography sx={{ display: "flex", alignItems: "center", mt: { xs: 1, sm: 0 } }}>
+        <Link href={path} sx={{ display: "flex", alignItems: "center", mt: { xs: 1, sm: 0 }, color: "var(--secondary)", textDecoration: "none", cursor: "pointer" }}>
           View All <EastIcon />
-        </Typography>
+        </Link>
       </Box>
 
       <Box
@@ -43,7 +43,7 @@ export default function NewThisWeek() {
           mt: 2
         }}
       >
-        {NewThisWeekData.map((item, key) => (
+        {items.map((item, key) => (
           <Box
             key={key}
             sx={{
