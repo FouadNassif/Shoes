@@ -45,7 +45,6 @@ export default function ItemCard({ item }: { item: ItemsCardType }) {
           position: "relative",
           width: "100%",
           height: {xs:250,md:350},
-          border: "2px solid var(--secondary)",
           overflow: "hidden",
           backgroundColor: "#f5f5f5",
         }}
@@ -70,7 +69,6 @@ export default function ItemCard({ item }: { item: ItemsCardType }) {
             transition: "transform 0.5s ease",
           }}
           onLoadingComplete={() => setIsLoading(false)}
-          priority
         />
       </Box>
 
