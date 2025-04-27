@@ -33,8 +33,8 @@ export default function NewCollections() {
           </Typography>
           {isMobile ? (
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
-              <Item imgSrc="/assets/img/shoes/img1.jpg" alt="New Collections Image 1" />
-              <Item imgSrc="/assets/img/shoes/img2.jpeg" alt="New Collections Image 2" />
+              <Item imgSrc="/assets/img/Shoes/Shoes1.jpg" alt="New Collections Image 1" />
+              <Item imgSrc="/assets/img/Shoes/Shoes1.jpeg" alt="New Collections Image 2" />
             </Box>
           ): null}
         </Box>
@@ -63,8 +63,8 @@ export default function NewCollections() {
       {/* Image Cards */}
       {!isMobile ? (
         <>
-          <Item imgSrc="/assets/img/shoes/img1.jpg" alt="New Collections Image 1" />
-          <Item imgSrc="/assets/img/shoes/img2.jpeg" alt="New Collections Image 2" />
+          <Item imgSrc="/assets/img/Shoes/Shoes3/Shoes1.jpg" alt="New Collections Image 1" />
+          <Item imgSrc="/assets/img/Shoes/Shoes8/Shoes1.jpg" alt="New Collections Image 2" />
         </>
       ): null}
     </Box>

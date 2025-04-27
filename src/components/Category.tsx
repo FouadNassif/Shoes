@@ -21,8 +21,8 @@ export default function Category() {
       }}
     >
       {[
-        { label: "For Him", src: "/assets/img/shoes/img8.jpg", gender: "Men" },
-        { label: "For Her", src: "/assets/img/shoes/img7.jpg", gender: "Women" },
+        { label: "For Him", src: "/assets/img/ForHim.jpg", gender: "Men" },
+        { label: "For Her", src: "/assets/img/ForHer.jpg", gender: "Women" },
       ].map((item, index) => (
         <Box
           key={index}
