@@ -58,7 +58,7 @@ A modern, responsive e-commerce platform built with Next.js 14, focusing on prov
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/shoeslb.git
+   git clone https://github.com/FouadNassif/Shoes.git
    ```
 
 2. Install dependencies:
@@ -131,7 +131,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- Your Name - Initial work
+- Fouad Nassif - Initial work
 
 ## 🙏 Acknowledgments
 
