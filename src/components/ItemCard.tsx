@@ -58,18 +58,16 @@ export default function ItemCard({ item }: { item: ItemsCardType }) {
           />
         )}
         <Image
-          src={item.mainImage}
-          alt={item.name}
-          width={400}
-          height={350}
-          style={{
-            objectFit: "cover",
-            width: "100%",
-            height: "100%",
-            transition: "transform 0.5s ease",
-          }}
-          onLoadingComplete={() => setIsLoading(false)}
-        />
+                src={item.mainImage}
+                alt={`${item.name} - ${item.brand}`}
+                width={400}
+                height={350}
+                style={{ objectFit: "cover", width: "100%", height: "100%", borderTopLeftRadius: 5, borderTopRightRadius: 5 }}
+                loading="lazy"
+                quality={85}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                onLoad={() => setIsLoading(false)}
+              />
       </Box>
 
       <Box

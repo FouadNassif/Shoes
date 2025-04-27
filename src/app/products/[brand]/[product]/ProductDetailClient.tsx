@@ -23,18 +23,18 @@ interface ProductDetailClientProps {
 export default function ProductDetailClient({
   product,
 }: ProductDetailClientProps) {
-  const images = [
-    product?.mainImage,
-    "/assets/img/shoes/img2.jpg",
-    "/assets/img/shoes/img3.jpg",
-    "/assets/img/shoes/img4.jpg",
-    "/assets/img/shoes/img5.jpg",
-  ];
+  const images = product ? [
+    product.mainImage,
+    product.mainImage.replace('Shoes1.jpg', 'Shoes2.jpg'),
+    product.mainImage.replace('Shoes1.jpg', 'Shoes3.jpg'),
+    product.mainImage.replace('Shoes1.jpg', 'Shoes4.jpg'),
+    product.mainImage.replace('Shoes1.jpg', 'Shoes5.jpg'),
+  ] : [];
 
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [mainImage, setMainImage] = useState<string>(
-    product?.mainImage || images[0]
+    product?.mainImage || ""
   );
   const { showNotification } = useNotification();
   const { addItemToCart } = useCart();
@@ -96,9 +96,12 @@ export default function ProductDetailClient({
           >
             <Image
               src={mainImage}
-              alt="Main Image"
+              alt="Main Product Image"
               fill
               style={{ objectFit: "cover", borderRadius: "8px" }}
+              priority={true}
+              quality={90}
+              sizes="(max-width: 768px) 100vw, 550px"
             />
           </Box>
 
@@ -129,10 +132,13 @@ export default function ProductDetailClient({
               >
                 <Image
                   src={image}
-                  alt={`Thumbnail ${key}`}
+                  alt={`Thumbnail ${key + 1}`}
                   width={70}
                   height={70}
                   style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                  loading="lazy"
+                  quality={75}
+                  sizes="70px"
                 />
               </Box>
             ))}
@@ -204,7 +210,6 @@ export default function ProductDetailClient({
             {product.description}
           </Typography>
 
-
           <Accordion sx={{ mb: 2, boxShadow: 'none', border: '1px solid #eee', borderRadius: '8px !important' }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -260,11 +265,13 @@ export default function ProductDetailClient({
                   <Typography sx={{ fontSize: 14, color: "#555", minWidth: 80 }}>
                     <span style={{ fontWeight: "bold" }}>Material:</span>
                   </Typography>
-                  {product.material.map((mats, key) => (
-                    <Typography key={key} sx={{ fontSize: 14, color: "#555" }}>
-                      {mats}
-                    </Typography>
-                  ))}
+                  <Box sx={{ display: 'flex', gap: 1 }}>
+                    {product.material.map((mat, key) => (
+                      <Typography key={key} sx={{ fontSize: 14, color: "#555" }}>
+                        {mat}
+                      </Typography>
+                    ))}
+                  </Box>
                 </Box>
               </Box>
             </AccordionDetails>
@@ -296,7 +303,7 @@ export default function ProductDetailClient({
             {product.sizes.map((size, index) => (
               <Box
                 key={index}
-                onClick={() => setSelectedSize(size)}
+                onClick={() => setSelectedSize(size.toString())}
                 sx={{
                   width: 35,
                   height: 35,
@@ -305,8 +312,8 @@ export default function ProductDetailClient({
                   justifyContent: "center",
                   borderRadius: 2,
                   border:
-                    selectedSize === size ? "2px solid #000" : "1px solid #aaa",
-                  backgroundColor: selectedSize === size ? "#eee" : "#fff",
+                    selectedSize === size.toString() ? "2px solid #000" : "1px solid #aaa",
+                  backgroundColor: selectedSize === size.toString() ? "#eee" : "#fff",
                   cursor: "pointer",
                   fontWeight: 500,
                 }}

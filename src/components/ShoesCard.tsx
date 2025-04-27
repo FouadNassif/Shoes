@@ -9,7 +9,7 @@ import { addToFavorites, removeFromFavorites, isFavorite } from '@/utils/favorit
 import { useNotification } from '@/context/NotificationContext';
 
 export type Shoe = {
-    id: string;
+    id: number;
     name: string;
     description: string;
     price: number;
@@ -22,11 +22,11 @@ export type Shoe = {
     rating: number;
     reviews: number;
     tags: string[];
-    material: string;
-    gender: string;
+    material: string[];
+    gender: "Men" | "Women" | "Unisex";
     date: string;
     isOnSale: boolean;
-    originalPrice: number;
+    originalPrice?: number;
 };
 
 type ShoesCardProps = {

@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 const CART_COOKIE = 'cart';
 
 export type CartItem = {
-    id: string;
+    id: number;
     name: string;
     price: number;
     size: string;
@@ -35,7 +35,7 @@ export const addToCart = (item: CartItem): void => {
     Cookies.set(CART_COOKIE, JSON.stringify(cart));
 };
 
-export const removeFromCart = (itemId: string, size: string, color: string): void => {
+export const removeFromCart = (itemId: number, size: string, color: string): void => {
     const cart = getCart();
     const updatedCart = cart.filter(
         item => !(item.id === itemId && item.size === size && item.color === color)
@@ -43,7 +43,7 @@ export const removeFromCart = (itemId: string, size: string, color: string): voi
     Cookies.set(CART_COOKIE, JSON.stringify(updatedCart));
 };
 
-export const updateCartItemQuantity = (itemId: string, size: string, color: string, quantity: number): void => {
+export const updateCartItemQuantity = (itemId: number, size: string, color: string, quantity: number): void => {
     const cart = getCart();
     const item = cart.find(
         item => item.id === itemId && item.size === size && item.color === color
@@ -55,9 +55,11 @@ export const updateCartItemQuantity = (itemId: string, size: string, color: stri
 };
 
 export const getCartCount = (): number => {
-    return getCart().reduce((total, item) => total + item.quantity, 0);
+    const cart = getCart();
+    return cart.reduce((total, item) => total + item.quantity, 0);
 };
 
 export const getCartTotal = (): number => {
-    return getCart().reduce((total, item) => total + (item.price * item.quantity), 0);
+    const cart = getCart();
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 }; 

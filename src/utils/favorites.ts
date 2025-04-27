@@ -3,12 +3,12 @@ import Cookies from 'js-cookie';
 const FAVORITES_COOKIE = 'favorites';
 const FAVORITES_CHANGED_EVENT = 'favoritesChanged';
 
-export const getFavorites = (): string[] => {
+export const getFavorites = (): number[] => {
     const favorites = Cookies.get(FAVORITES_COOKIE);
     return favorites ? JSON.parse(favorites) : [];
 };
 
-export const addToFavorites = (shoeId: string): void => {
+export const addToFavorites = (shoeId: number): void => {
     const favorites = getFavorites();
     if (!favorites.includes(shoeId)) {
         favorites.push(shoeId);
@@ -18,7 +18,7 @@ export const addToFavorites = (shoeId: string): void => {
     }
 };
 
-export const removeFromFavorites = (shoeId: string): void => {
+export const removeFromFavorites = (shoeId: number): void => {
     const favorites = getFavorites();
     const updatedFavorites = favorites.filter(id => id !== shoeId);
     Cookies.set(FAVORITES_COOKIE, JSON.stringify(updatedFavorites));
@@ -26,7 +26,7 @@ export const removeFromFavorites = (shoeId: string): void => {
     window.dispatchEvent(new CustomEvent(FAVORITES_CHANGED_EVENT));
 };
 
-export const isFavorite = (shoeId: string): boolean => {
+export const isFavorite = (shoeId: number): boolean => {
     const favorites = getFavorites();
     return favorites.includes(shoeId);
 };

@@ -5,6 +5,7 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import EastIcon from "@mui/icons-material/East";
 import ItemCard from "@/components/ItemCard";
 import { ItemsCardType } from "@/types/Items";
+import Image from "next/image";
 
 export default function ItemSection({title, items, path}: {title: string, items: ItemsCardType[], path: string}) {
   const scrollRef = useRef<HTMLDivElement>(null);

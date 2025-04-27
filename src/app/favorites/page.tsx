@@ -3,12 +3,12 @@
 import { Box, Container, Typography, Grid, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getFavorites } from "@/utils/favorites";
-import { shoes } from "@/data/staticShoes";
+import { staticShoes } from "@/data/staticShoes";
 import ShoesCard from "@/components/ShoesCard";
 import Navbar from "@/components/Navbar";
 
 export default function FavoritesPage() {
-    const [favoriteShoes, setFavoriteShoes] = useState(shoes.filter(shoe => getFavorites().includes(shoe.id)));
+    const [favoriteShoes, setFavoriteShoes] = useState(staticShoes.filter(shoe => getFavorites().includes(shoe.id)));
 
     return (
         <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>

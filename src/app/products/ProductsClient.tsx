@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import FilterSidebar from "@/components/FilterSideBar";
 import NavBar from "@/components/Navbar";
 import SearchBar from "@/components/SearchBar";
@@ -17,6 +17,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  IconButton,
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -55,6 +56,8 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
   const [openFilter, setOpenFilter] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
   // --- State for Filters, Search, Sort --- 
   const [sort, setSort] = useState<string>(searchParams.get('sort') || "default");
@@ -191,7 +194,23 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
       return filtered;
 
   }, [shoes, filters, sort]);
-  // -------------------------------------
+
+  // Pagination logic
+  const totalPages = Math.ceil(displayedShoes.length / itemsPerPage);
+  const paginatedShoes = displayedShoes.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters, sort]);
 
   // Function to update URL with current filters
   const updateUrlWithFilters = (newFilters: AppliedFilters, newSort: string) => {
@@ -457,7 +476,7 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
               flex: 1,
               overflowY: isMobile ? "visible" : "auto",
               mt: 3,
-              px: { xs: 0, sm: 0 }, // Add padding on mobile
+              px: { xs: 0, sm: 0 },
             }}
           >
             {displayedShoes.length === 0 && (
@@ -476,7 +495,7 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
                   pb: 2,
                 }}
               >
-                {displayedShoes.map((item) => (
+                {paginatedShoes.map((item) => (
                   <ShoesCard shoe={item} key={item.id} />
                 ))}
               </Box>
@@ -491,9 +510,65 @@ export default function ProductsClient({ shoes }: ProductsClientProps) {
                   pb: 2,
                 }}
               >
-                {displayedShoes.map((item) => (
+                {paginatedShoes.map((item) => (
                   <ShoesCard shoe={item} key={item.id} />
                 ))}
+              </Box>
+            )}
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <Box sx={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                gap: 1,
+                mt: 4,
+                mb: 2
+              }}>
+                <IconButton
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  sx={{ 
+                    color: 'var(--secondary)',
+                    '&:disabled': {
+                      color: 'grey.400'
+                    }
+                  }}
+                >
+                  ←
+                </IconButton>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <IconButton
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    sx={{
+                      bgcolor: currentPage === page ? 'var(--secondary)' : 'transparent',
+                      color: currentPage === page ? 'white' : 'var(--secondary)',
+                      '&:hover': {
+                        bgcolor: currentPage === page ? 'var(--secondary-dark)' : 'rgba(0, 0, 0, 0.04)',
+                      },
+                      minWidth: '32px',
+                      height: '32px',
+                      fontSize: '0.875rem',
+                      fontWeight: currentPage === page ? 'bold' : 'normal'
+                    }}
+                  >
+                    {page}
+                  </IconButton>
+                ))}
+                <IconButton
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  sx={{ 
+                    color: 'var(--secondary)',
+                    '&:disabled': {
+                      color: 'grey.400'
+                    }
+                  }}
+                >
+                  →
+                </IconButton>
               </Box>
             )}
           </Box>
