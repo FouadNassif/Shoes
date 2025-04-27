@@ -3,7 +3,8 @@ import { playfair, montserrat, poppins, bangers } from './fonts'
 import "./global.css"
 import { NotificationProvider } from "@/context/NotificationContext";
 import { CartProvider } from "@/context/CartContext";
-
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 export const metadata: Metadata = {
   title: "SHOESLB - Your Style, Your Way",
   description: "Discover the latest trends in footwear at SHOESLB. Shop our collection of stylish shoes for men and women. Find your perfect pair today!",
@@ -60,6 +61,8 @@ export default function RootLayout({
         <NotificationProvider>
           <CartProvider>
             {children}
+            <Analytics/>
+            <SpeedInsights/>
           </CartProvider>
         </NotificationProvider>
       </body>
