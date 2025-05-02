@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'google-site-verification=lVMjh3w_PWE-OaQJJFG-7rLTg6JvpoP7bX39bKHafhw', // Add your Google Search Console verification code
+    google: 'lVMjh3w_PWE-OaQJJFG-7rLTg6JvpoP7bX39bKHafhw',
   },
 };
 
@@ -70,6 +70,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${playfair.variable} ${montserrat.variable} ${poppins.variable} ${bangers.variable}`}>
+      <head>
+        <meta name="google-site-verification" content="lVMjh3w_PWE-OaQJJFG-7rLTg6JvpoP7bX39bKHafhw" />
+      </head>
       <body className={poppins.className}>
         <NotificationProvider>
           <CartProvider>
